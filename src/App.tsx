@@ -23,10 +23,10 @@ export default function App() {
               <div>
                   <TopBar/>
                   <Switch>
-                      <ProtectedRoute path="/bikes">
+                      <ProtectedRoute path="/stations/:id/bikes">
                           <BikeListPage/>
                       </ProtectedRoute>
-                      <ProtectedRoute path="/stations">
+                      <ProtectedRoute path="/stations/active">
                           <StationListPage/>
                       </ProtectedRoute>
                       <Route path="/register">

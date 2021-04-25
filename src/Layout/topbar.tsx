@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { postLogout } from "../Api/UserApi";
@@ -61,7 +61,7 @@ export const TopBar: React.FC = () => {
                                 <MenuIcon/>
                             </IconButton>
                             <Button color="inherit" startIcon={<LocalParkingIcon/>} className={classes.title}
-                                    component={Link} to="/stations"> Stations </Button>
+                                    component={Link} to="/stations/active"> Stations </Button>
                             </div>
                             <div>
                             <Button color="inherit" startIcon={<ExitToAppIcon/>} className={classes.title}
