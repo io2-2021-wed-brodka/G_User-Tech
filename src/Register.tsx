@@ -6,6 +6,7 @@ import {Animated} from "react-animated-css";
 import { useState} from "react";
 import 'animate.css';
 import Box from '@material-ui/core/Box';
+import { postLogin, postRegister } from './Api/UserApi';
 const useStyles = makeStyles((theme: Theme) =>
 createStyles({
   formContainer: {
@@ -61,10 +62,38 @@ export const RegisterLoginPage = () =>{
     const classes = useStyles();
     const [loginOpen, setLoginOpen] = useState<boolean>(true);
     const [signInOpen, setSignInOpen] = useState<boolean>(false);
+    const [login, setLogin] = useState<string>("Login");
+    const [password, setPassword] = useState<string>("Password");
+    const [loginRegister, setLoginRegister] = useState<string>("Login");
+    const [passwordRegister, setPasswordRegister] = useState<string>("Password");
     const handleOpen = () =>{
         setLoginOpen(!loginOpen);
         setSignInOpen(!signInOpen);
         console.log(loginOpen);
+    }    
+    const handleChangeLoginLogin = (login: string) => {
+        setLogin(login);
+    }
+    const handleChangePasswordLogin = (password: string) => {
+        setPassword(password);
+    }
+    const handleLogging = () => {
+        postLogin(login, password);
+    }
+    const handleChangeLoginRegister = (login: string) => {
+        setLogin(login);
+    }
+    const handleChangePasswordRegister = (password: string) => {
+        setPassword(password);
+    }
+    const handleRegister = () => {
+        postRegister(login, password);
+    }
+    const onEnterDown = (event : any) => {
+        if(event.key == "Enter") {
+          event.preventDefault();
+          handleLogging();
+        }
     }
     return (
         <div className={classes.windowContainer}>
@@ -75,9 +104,11 @@ export const RegisterLoginPage = () =>{
                         <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={loginOpen}   >
                             <Container fixed className={classes.formContainer} >
                                 <div className={classes.welcomeLabel}>Log in</div>
-                                <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}/>
-                                <TextField id="standard-password" label="Password" variant="filled" className={classes.textFieldStyle}/>
-                                <Button variant="contained" style={{borderRadius: '15px'}}> Log in</Button>
+                                <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
+                                    onChange={(event: any) => handleChangeLoginLogin(event.target.value)} onKeyDown={onEnterDown}/>
+                                <TextField id="standard-password" label="Password" type="password" variant="filled" className={classes.textFieldStyle}
+                                    onChange={(event: any) => handleChangePasswordLogin(event.target.value)} onKeyDown={onEnterDown}/>
+                                <Button variant="contained" style={{borderRadius: '15px'}} onClick={handleLogging}> Log in</Button>
                             </Container>
                         </Animated>              
                     :  
@@ -94,10 +125,12 @@ export const RegisterLoginPage = () =>{
                         <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={signInOpen}>
                             <Container fixed className={classes.formContainer}>
                                 <div className={classes.welcomeLabel}>Sign in</div>
-                                <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}/>
-                                <TextField id="standard-password" label="Password" variant="filled" className={classes.textFieldStyle}/>
-                                <TextField id="standard-password-confirm" label="Password Confirm" variant="filled" className={classes.textFieldStyle}/>
-                                <Button variant="contained" style={{borderRadius: '15px'}}> Sign in</Button>
+                                <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
+                                    onChange={(event: any) => handleChangeLoginRegister(event.target.value)} onKeyDown={onEnterDown}/>
+                                <TextField id="standard-password" type="password" label="Password" variant="filled" className={classes.textFieldStyle}
+                                    onChange={(event: any) => handleChangePasswordRegister(event.target.value)} onKeyDown={onEnterDown}/>
+                                {/* <TextField id="standard-password-confirm" label="Password Confirm" variant="filled" className={classes.textFieldStyle}/> */}
+                                <Button variant="contained" style={{borderRadius: '15px'}} onClick={() => {handleRegister(); handleOpen()} }> Sign in</Button>
                             </Container>
                         </Animated>
                     :

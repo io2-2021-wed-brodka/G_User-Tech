@@ -13,6 +13,7 @@ import StationListPage from './stationList'
 import bicycleWallpaper from './Resources/bikeWP.jpg';
 import React from "react";
 import { RegisterLoginPage } from "./Register";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 export default function App() {
   return (
@@ -22,18 +23,20 @@ export default function App() {
               <div>
                   <TopBar/>
                   <Switch>
-                      <Route path="/bikes">
+                      <ProtectedRoute path="/bikes">
                           <BikeListPage/>
-                      </Route>
-                      <Route path="/stations">
+                      </ProtectedRoute>
+                      <ProtectedRoute path="/stations">
                           <StationListPage/>
-                      </Route>
+                      </ProtectedRoute>
                       <Route path="/register">
                           <RegisterLoginPage/>
                       </Route>
                       <Route path="/login">
                           <RegisterLoginPage/>
                       </Route>
+                      <Route path="/">
+                        </Route>
                   </Switch>
               </div>
           </Router>
