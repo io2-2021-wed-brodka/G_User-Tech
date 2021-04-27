@@ -3,7 +3,6 @@ import {axiosHandleResponse, getRequestConfig} from "./ApiUtils"
 import {Bike} from "./bikeApi"
 import axios from "axios";
 
-const station_url = BASE_URL + "stations/";
 const station_active_url = BASE_URL + "stations/active/";
 
 export enum StationState {
@@ -17,7 +16,7 @@ export interface Station {
     bikes: Bike[];
 }
 
-export const getActiveStation = async () => {
+export const getActiveStations = async () => {
     return axios.get(station_active_url, getRequestConfig())
-    .then(r => axiosHandleResponse(r));
+        .then(r => axiosHandleResponse(r));
 }
