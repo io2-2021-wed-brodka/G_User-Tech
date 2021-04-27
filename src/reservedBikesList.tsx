@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import {Bike, BikeStatus, getReservedBikes, rentBike} from "./Api/bikeApi";
+import {Bike, BikeStatus, getReservedBikes, rentBike, cancelReservation} from "./Api/bikeApi";
 import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,6 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
         },
         rentButton: {
+            backgroundColor: '#D11A2A ',
+            variant: 'contained',
+            margin: '5px'
+        },
+        cancelReservationButton: {
             backgroundColor: '#D11A2A ',
             variant: 'contained',
             margin: '5px'
@@ -67,9 +72,10 @@ const themeWarning = createMuiTheme({
 });
 
 
-const BikeListPage = () => {
+const ReservedBikesListPage = () => {
     const classes = useStyles();
     const [openRentBike, setOpenRentBike] = useState<boolean>(false);
+    const [openCancelReservation, setOpenCancelReservation] = useState<boolean>(false);
     const [bikeList, setBikeList] = React.useState<Bike[]>([]);
     const [selectedIndex, setSelectedIndex] = React.useState(-1);
     const [getBikesTrigger, setBikesTrigger] = React.useState(true);
@@ -81,9 +87,17 @@ const BikeListPage = () => {
     const handleCloseRentBike = () => {
         setOpenRentBike(false);
     };
+    const handleCloseCancelReservation = () => {
+        setOpenCancelReservation(false);
+    };
     const rentBikeClicked = async () => {
         await rentBike(bikeList[selectedIndex].id);
         setOpenRentBike(false);
+        setBikesTrigger(!getBikesTrigger);
+    };
+    const cancelReservationClicked = async () => {
+        await cancelReservation(bikeList[selectedIndex].id);
+        setOpenCancelReservation(false);
         setBikesTrigger(!getBikesTrigger);
     };
     useEffect(() => {
@@ -101,73 +115,95 @@ const BikeListPage = () => {
     }, [getBikesTrigger]);
     return (
         <div className={classes.generalContainer}>
-        <List className={classes.ListStyle} subheader={<li/>}>
-    <li className={classes.listSection}>
-    <ul className={classes.ul}>
-    <ListSubheader
-        style={{
-        backgroundColor: '#4E4E50', display: 'flex', fontWeight: 'bold',
-            height: '50px', borderRadius: '15px'
-    }}>
-    <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-    style={{width: '90%'}}>
-    <Box p={1} m={1}>
-        State
-        </Box>
-        <Box p={1} m={1} style={{marginLeft: '6%'}}>
-    Station
-    </Box>
-    </Box>
-    </ListSubheader>
-    {bikeList.map((bike, index) => {
-        return (
-            <li key={bike.id}>
-            <ListItem style={{
-            backgroundColor: '#69696e', color: 'white', display: 'flex',
-                height: '50px', marginBottom: '5px', marginTop: '5px', borderRadius: '15px'
-        }}
-        onClick={() => handleBikeListItemClick(index)}>
-        <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-        style={{width: '90%'}}>
-        <Box p={2} m={1}>
-        <ListItemText primary={BikeStatus[bike.status]}/>
-        </Box>
-        <Box p={2} m={1}>
-        <ListItemText primary={bike.station == null ? "" : bike.station.name}/>
-        </Box>
-        </Box>
-        <ThemeProvider theme={themeWarning}>
-        <Button className={classes.rentButton} id="rent_bike_button"
-        startIcon={<DeleteOutlineSharpIcon/>}
-        onClick={() => setOpenRentBike(true)}> RENT</Button>
-        <Dialog open={openRentBike}
-        keepMounted
-        onClose={handleCloseRentBike}>
-        <DialogTitle
-            id="alert-dialog-slide-title">{"Rent this bike?"}</DialogTitle>
-        <DialogContent>
-        <DialogContentText id="alert-dialog-slide-description">
-            Do you really want you rent this bike?
-            </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-            <Button onClick={handleCloseRentBike} color="primary">
-                No
-                </Button>
-                <Button onClick={rentBikeClicked} color="primary">
-            Yes
-            </Button>
-            </DialogActions>
-            </Dialog>
-            </ThemeProvider>
-            </ListItem>
-            </li>
+            <List className={classes.ListStyle} subheader={<li/>}>
+                <li className={classes.listSection}>
+                    <ul className={classes.ul}>
+                        <ListSubheader
+                            style={{
+                                backgroundColor: '#4E4E50', display: 'flex', fontWeight: 'bold',
+                                height: '50px', borderRadius: '15px'
+                            }}>
+                            <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
+                                 style={{width: '90%'}}>
+                                <Box p={1} m={1}>
+                                    State
+                                </Box>
+                                <Box p={1} m={1} style={{marginLeft: '6%'}}>
+                                    Station
+                                </Box>
+                            </Box>
+                        </ListSubheader>
+                        {bikeList.map((bike, index) => {
+                            return (
+                                <li key={bike.id}>
+                                    <ListItem style={{
+                                        backgroundColor: '#69696e', color: 'white', display: 'flex',
+                                        height: '50px', marginBottom: '5px', marginTop: '5px', borderRadius: '15px'
+                                    }}
+                                              onClick={() => handleBikeListItemClick(index)}>
+                                        <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
+                                             style={{width: '90%'}}>
+                                            <Box p={2} m={1}>
+                                                <ListItemText primary={BikeStatus[bike.status]}/>
+                                            </Box>
+                                            <Box p={2} m={1}>
+                                                <ListItemText primary={bike.station == null ? "" : bike.station.name}/>
+                                            </Box>
+                                        </Box>
+                                        <ThemeProvider theme={themeWarning}>
+                                            <Button className={classes.cancelReservationButton} id="cancel_reservation_button"
+                                                    startIcon={<DeleteOutlineSharpIcon/>}
+                                                    onClick={() => setOpenCancelReservation(true)}> CANCEL RESERVATION</Button>
+                                            <Button className={classes.rentButton} id="rent_bike_button"
+                                                    startIcon={<DeleteOutlineSharpIcon/>}
+                                                    onClick={() => setOpenRentBike(true)}> RENT</Button>
+                                            <Dialog open={openCancelReservation}
+                                                    keepMounted
+                                                    onClose={handleCloseCancelReservation}>
+                                                <DialogTitle
+                                                    id="alert-dialog-slide-title">{"Cancel reservation?"}</DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-slide-description">
+                                                        Do you really want to cancel reservation?
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={handleCloseCancelReservation} color="primary">
+                                                        No
+                                                    </Button>
+                                                    <Button onClick={cancelReservationClicked} color="primary">
+                                                        Yes
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                            <Dialog open={openRentBike}
+                                                    keepMounted
+                                                    onClose={handleCloseRentBike}>
+                                                <DialogTitle
+                                                    id="alert-dialog-slide-title">{"Rent this bike?"}</DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-slide-description">
+                                                        Do you really want you rent this bike?
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={handleCloseRentBike} color="primary">
+                                                        No
+                                                    </Button>
+                                                    <Button onClick={rentBikeClicked} color="primary">
+                                                        Yes
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                        </ThemeProvider>
+                                    </ListItem>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </li>
+            </List>
+        </div>
     );
-    })}
-    </ul>
-    </li>
-    </List>
-    </div>
-);
 }
-export default BikeListPage;
+export default ReservedBikesListPage;

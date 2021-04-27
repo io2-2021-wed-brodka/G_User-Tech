@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import {Bike, BikeStatus, getBikesAtStation, rentBike} from "./Api/bikeApi";
+import {Bike, BikeStatus, getBikesAtStation, rentBike, reserveBike} from "./Api/bikeApi";
 import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,6 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
         },
         rentButton: {
+            backgroundColor: '#D11A2A ',
+            variant: 'contained',
+            margin: '5px'
+        },
+        reserveBikeButton: {
             backgroundColor: '#D11A2A ',
             variant: 'contained',
             margin: '5px'
@@ -70,6 +75,7 @@ const themeWarning = createMuiTheme({
 const BikeListPage = () => {
     const classes = useStyles();
     const [openRentBike, setOpenRentBike] = useState<boolean>(false);
+    const [openReserveBike, setOpenReserveBike] = useState<boolean>(false);
     const [bikeList, setBikeList] = React.useState<Bike[]>([]);
     const [selectedIndex, setSelectedIndex] = React.useState(-1);
     const [getBikesTrigger, setBikesTrigger] = React.useState(true);
@@ -81,9 +87,17 @@ const BikeListPage = () => {
     const handleCloseRentBike = () => {
         setOpenRentBike(false);
     };
+    const handleCloseReserveBike = () => {
+        setOpenReserveBike(false);
+    };
     const rentBikeClicked = async () => {
         await rentBike(bikeList[selectedIndex].id);
         setOpenRentBike(false);
+        setBikesTrigger(!getBikesTrigger);
+    };
+    const reserveBikeClicked = async () => {
+        await reserveBike(bikeList[selectedIndex].id);
+        setOpenReserveBike(false);
         setBikesTrigger(!getBikesTrigger);
     };
     useEffect(() => {
@@ -143,6 +157,9 @@ const BikeListPage = () => {
                                             <Button className={classes.rentButton} id="rent_bike_button"
                                                     startIcon={<DeleteOutlineSharpIcon/>}
                                                     onClick={() => setOpenRentBike(true)}> RENT</Button>
+                                            <Button className={classes.reserveBikeButton} id="reserve_bike_button"
+                                                    startIcon={<DeleteOutlineSharpIcon/>}
+                                                    onClick={() => setOpenReserveBike(true)}> RESERVE</Button>
                                             <Dialog open={openRentBike}
                                                     keepMounted
                                                     onClose={handleCloseRentBike}>
@@ -158,6 +175,25 @@ const BikeListPage = () => {
                                                         No
                                                     </Button>
                                                     <Button onClick={rentBikeClicked} color="primary">
+                                                        Yes
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                            <Dialog open={openReserveBike}
+                                                    keepMounted
+                                                    onClose={handleCloseReserveBike}>
+                                                <DialogTitle
+                                                    id="alert-dialog-slide-title">{"Reserve this bike?"}</DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-slide-description">
+                                                        Do you really want you reserve this bike?
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={handleCloseReserveBike} color="primary">
+                                                        No
+                                                    </Button>
+                                                    <Button onClick={reserveBikeClicked} color="primary">
                                                         Yes
                                                     </Button>
                                                 </DialogActions>
