@@ -24,3 +24,18 @@ export const rentBike = async (bikeId: string) => {
     return axios.post(`${BASE_URL}bikes/rented/`, {"id": bikeId}, getRequestConfig())
         .then(r => axiosHandleResponse(r));
 }
+
+export const getRentedBikes = async () => {
+    return axios.get(`${BASE_URL}bikes/rented/`, getRequestConfig())
+        .then(r => axiosHandleResponse(r));
+}
+
+export const getReservedBikes = async () => {
+    return axios.get(`${BASE_URL}bikes/reserved/`, getRequestConfig())
+        .then(r => axiosHandleResponse(r));
+}
+
+export const returnBike = async (bikeId: string, stationId: string) => {
+    return axios.post(`${BASE_URL}stations/${stationId}/bikes/`, {"id": bikeId}, getRequestConfig())
+        .then(r => axiosHandleResponse(r));
+}
