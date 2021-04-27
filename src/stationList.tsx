@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             flexWrap: 'wrap',
         },
-        deleteButton: {
+        rentButton: {
             backgroundColor: '#D11A2A',
             variant: 'contained',
             margin: '5px'
