@@ -8,7 +8,6 @@ import StationListPage from './stationList';
 import RentedBikesListPage from './rentedBikesList';
 import ReservedBikesListPage from './reservedBikesList';
 import bicycleWallpaper from './Resources/bikeWP.jpg';
-import React from "react";
 import {RegisterLoginPage} from "./Register";
 import {ProtectedRoute} from "./ProtectedRoute";
 

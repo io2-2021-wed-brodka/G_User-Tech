@@ -10,6 +10,8 @@ import {Link} from 'react-router-dom';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import {postLogout} from "../Api/UserApi";
+import BookIcon from '@material-ui/icons/Book';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -64,9 +66,9 @@ export const TopBar: React.FC = () => {
                                 </IconButton>
                                 <Button color="inherit" startIcon={<LocalParkingIcon/>} className={classes.title}
                                         component={Link} to="/stations/active"> Stations </Button>
-                                <Button color="inherit" startIcon={<LocalParkingIcon/>} className={classes.title}
+                                <Button color="inherit" startIcon={<BookIcon/>} className={classes.title}
                                         component={Link} to="/bikes/rented"> My Rented Bikes </Button>
-                                <Button color="inherit" startIcon={<LocalParkingIcon/>} className={classes.title}
+                                <Button color="inherit" startIcon={<HourglassEmptyIcon/>} className={classes.title}
                                         component={Link} to="/bikes/reserved"> My Reservations </Button>
                             </div>
                             <div>

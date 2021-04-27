@@ -17,6 +17,8 @@ import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import {Bike, BikeStatus, getBikesAtStation, rentBike, reserveBike} from "./Api/bikeApi";
 import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -39,12 +41,12 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
         },
         rentButton: {
-            backgroundColor: '#D11A2A ',
+            backgroundColor: '#fdfd96 ',
             variant: 'contained',
             margin: '5px'
         },
         reserveBikeButton: {
-            backgroundColor: '#D11A2A ',
+            backgroundColor: '#ffb347 ',
             variant: 'contained',
             margin: '5px'
         },
@@ -129,10 +131,7 @@ const BikeListPage = () => {
                             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                  style={{width: '90%'}}>
                                 <Box p={1} m={1}>
-                                    State
-                                </Box>
-                                <Box p={1} m={1} style={{marginLeft: '6%'}}>
-                                    Station
+                                    Id
                                 </Box>
                             </Box>
                         </ListSubheader>
@@ -147,18 +146,15 @@ const BikeListPage = () => {
                                         <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                              style={{width: '90%'}}>
                                             <Box p={2} m={1}>
-                                                <ListItemText primary={BikeStatus[bike.status]}/>
-                                            </Box>
-                                            <Box p={2} m={1}>
-                                                <ListItemText primary={bike.station == null ? "" : bike.station.name}/>
+                                                <ListItemText primary={bike.id}/>
                                             </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
                                             <Button className={classes.rentButton} id="rent_bike_button"
-                                                    startIcon={<DeleteOutlineSharpIcon/>}
+                                                    startIcon={<DirectionsBikeIcon/>}
                                                     onClick={() => setOpenRentBike(true)}> RENT</Button>
                                             <Button className={classes.reserveBikeButton} id="reserve_bike_button"
-                                                    startIcon={<DeleteOutlineSharpIcon/>}
+                                                    startIcon={<HourglassEmptyIcon/>}
                                                     onClick={() => setOpenReserveBike(true)}> RESERVE</Button>
                                             <Dialog open={openRentBike}
                                                     keepMounted

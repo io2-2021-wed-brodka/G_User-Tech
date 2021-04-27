@@ -6,8 +6,8 @@ import {Button, ListItem, ListItemText, ListSubheader} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import {createMuiTheme, createStyles, makeStyles, Theme, ThemeProvider} from '@material-ui/core/styles';
 import {getActiveStations, Station} from './Api/StationApi';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import {Link} from 'react-router-dom';
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -59,8 +59,8 @@ const themeWarning = createMuiTheme({
 function StationListPage() {
     const classes = useStyles();
     const [stationList, setStationList] = React.useState<Station[]>([]);
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
-    const [getActiveStationsTrigger, setActiveStationsTrigger] = React.useState(true);
+    const [, setSelectedIndex] = React.useState(0);
+    const [getActiveStationsTrigger, ] = React.useState(true);
     const handleListItemClick = (
         index: number,
     ) => {
@@ -93,7 +93,7 @@ function StationListPage() {
                             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                  style={{width: '90%'}}>
                                 <Box p={0} m={1}>
-                                    Name
+                                    Station name
                                 </Box>
                             </Box>
                         </ListSubheader>
@@ -114,7 +114,7 @@ function StationListPage() {
                                         <ThemeProvider theme={themeWarning}>
                                             <Button variant="contained" color="primary" className={classes.blockButton}
                                                     component={Link} to={`${station.id}/bikes`}
-                                                    startIcon={<ErrorOutlineIcon/>}> Select </Button>
+                                                    startIcon={<SubdirectoryArrowRightIcon/>}> Select </Button>
                                         </ThemeProvider>
                                     </ListItem>
                                 </div>

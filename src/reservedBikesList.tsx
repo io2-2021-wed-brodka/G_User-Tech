@@ -15,8 +15,9 @@ import {
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import {Bike, BikeStatus, getReservedBikes, rentBike, cancelReservation} from "./Api/bikeApi";
+import {Bike, getReservedBikes, rentBike, cancelReservation} from "./Api/bikeApi";
 import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
         },
         rentButton: {
-            backgroundColor: '#D11A2A ',
+            backgroundColor: '#f2e20e ',
             variant: 'contained',
             margin: '5px'
         },
@@ -125,12 +126,12 @@ const ReservedBikesListPage = () => {
                             }}>
                             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                  style={{width: '90%'}}>
-                                <Box p={1} m={1}>
-                                    State
-                                </Box>
-                                <Box p={1} m={1} style={{marginLeft: '6%'}}>
-                                    Station
-                                </Box>
+                                <Box p={1} m={1} style={{marginRight: '30%'}}>
+                                    Id
+                                </Box> 
+                                <Box p={1} m={1} >
+                                    Station name
+                                </Box>                                    
                             </Box>
                         </ListSubheader>
                         {bikeList.map((bike, index) => {
@@ -144,7 +145,7 @@ const ReservedBikesListPage = () => {
                                         <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                              style={{width: '90%'}}>
                                             <Box p={2} m={1}>
-                                                <ListItemText primary={BikeStatus[bike.status]}/>
+                                                <ListItemText primary={bike.id}/>
                                             </Box>
                                             <Box p={2} m={1}>
                                                 <ListItemText primary={bike.station == null ? "" : bike.station.name}/>
@@ -153,9 +154,10 @@ const ReservedBikesListPage = () => {
                                         <ThemeProvider theme={themeWarning}>
                                             <Button className={classes.cancelReservationButton} id="cancel_reservation_button"
                                                     startIcon={<DeleteOutlineSharpIcon/>}
-                                                    onClick={() => setOpenCancelReservation(true)}> CANCEL RESERVATION</Button>
+                                                    onClick={() => setOpenCancelReservation(true)}
+                                                    style={{height: '100%'}}> CANCEL</Button>
                                             <Button className={classes.rentButton} id="rent_bike_button"
-                                                    startIcon={<DeleteOutlineSharpIcon/>}
+                                                    startIcon={<DirectionsBikeIcon/>}
                                                     onClick={() => setOpenRentBike(true)}> RENT</Button>
                                             <Dialog open={openCancelReservation}
                                                     keepMounted

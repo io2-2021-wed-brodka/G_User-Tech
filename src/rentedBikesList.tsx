@@ -16,13 +16,12 @@ import {
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import AddIcon from '@material-ui/icons/Add';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
-import {Bike, BikeStatus, returnBike, getRentedBikes} from "./Api/bikeApi";
+import {Bike, returnBike, getRentedBikes} from "./Api/bikeApi";
 import {getActiveStations, Station} from "./Api/StationApi";
-import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
         },
         returnBikeButton: {
-            backgroundColor: '#D11A2A ',
+            backgroundColor: '#f2e20e ',
             variant: 'contained',
             margin: '5px'
         },
@@ -73,7 +72,6 @@ const themeWarning = createMuiTheme({
 });
 const RentedBikesListPage = () => {
     const classes = useStyles();
-    const [openDeleteBike, setOpenDeleteBike] = useState<boolean>(false);
     const [openCreateBike, setOpenRentBike] = useState<boolean>(false);
     const [chosenStationId, setChosenStationId] = React.useState<string>("");
     const [bikeList, setBikeList] = React.useState<Bike[]>([]);
@@ -137,10 +135,7 @@ const RentedBikesListPage = () => {
                             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                  style={{width: '90%'}}>
                                 <Box p={1} m={1}>
-                                    State
-                                </Box>
-                                <Box p={1} m={1} style={{marginLeft: '6%'}}>
-                                    Station
+                                    Id
                                 </Box>
                             </Box>
                         </ListSubheader>
@@ -155,15 +150,12 @@ const RentedBikesListPage = () => {
                                         <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                              style={{width: '90%'}}>
                                             <Box p={2} m={1}>
-                                                <ListItemText primary={BikeStatus[bike.status]}/>
-                                            </Box>
-                                            <Box p={2} m={1}>
-                                                <ListItemText primary={bike.station == null ? "(not at station)" : bike.station.name}/>
+                                                <ListItemText primary={bike.id}/>
                                             </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
                                             <Button className={classes.returnBikeButton} id="return_bike_button"
-                                                    startIcon={<DeleteOutlineSharpIcon/>}
+                                                    startIcon={<DirectionsBikeIcon/>}
                                                     onClick={handleOpenReturnBike}> RETURN
                                             </Button>
                                             <Dialog disableBackdropClick open={openCreateBike} onClose={handleCloseReturnBike}>
