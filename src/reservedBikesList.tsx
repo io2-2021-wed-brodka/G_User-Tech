@@ -15,10 +15,9 @@ import {
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import {Bike, BikeStatus, getBikesAtStation, rentBike, reserveBike} from "./Api/bikeApi";
+import {Bike, getReservedBikes, rentBike, cancelReservation} from "./Api/bikeApi";
 import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -41,12 +40,12 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
         },
         rentButton: {
-            backgroundColor: '#fdfd96 ',
+            backgroundColor: '#f2e20e ',
             variant: 'contained',
             margin: '5px'
         },
-        reserveBikeButton: {
-            backgroundColor: '#ffb347 ',
+        cancelReservationButton: {
+            backgroundColor: '#D11A2A ',
             variant: 'contained',
             margin: '5px'
         },
@@ -74,10 +73,10 @@ const themeWarning = createMuiTheme({
 });
 
 
-const BikeListPage = () => {
+const ReservedBikesListPage = () => {
     const classes = useStyles();
     const [openRentBike, setOpenRentBike] = useState<boolean>(false);
-    const [openReserveBike, setOpenReserveBike] = useState<boolean>(false);
+    const [openCancelReservation, setOpenCancelReservation] = useState<boolean>(false);
     const [bikeList, setBikeList] = React.useState<Bike[]>([]);
     const [selectedIndex, setSelectedIndex] = React.useState(-1);
     const [getBikesTrigger, setBikesTrigger] = React.useState(true);
@@ -89,24 +88,21 @@ const BikeListPage = () => {
     const handleCloseRentBike = () => {
         setOpenRentBike(false);
     };
-    const handleCloseReserveBike = () => {
-        setOpenReserveBike(false);
+    const handleCloseCancelReservation = () => {
+        setOpenCancelReservation(false);
     };
     const rentBikeClicked = async () => {
         await rentBike(bikeList[selectedIndex].id);
         setOpenRentBike(false);
         setBikesTrigger(!getBikesTrigger);
     };
-    const reserveBikeClicked = async () => {
-        await reserveBike(bikeList[selectedIndex].id);
-        setOpenReserveBike(false);
+    const cancelReservationClicked = async () => {
+        await cancelReservation(bikeList[selectedIndex].id);
+        setOpenCancelReservation(false);
         setBikesTrigger(!getBikesTrigger);
     };
     useEffect(() => {
-        // TODO(tkarwowski): Is there a better way to do this?
-        const url = window.location.href;
-        const stationId = url.match(/http:\/\/localhost:3000\/stations\/(?<stationId>[^/]*)\/bikes/)?.groups?.stationId || "";
-        getBikesAtStation(stationId).then(r => {
+        getReservedBikes().then(r => {
             if (r.isError) {
                 alert("Error");
                 return;
@@ -130,9 +126,12 @@ const BikeListPage = () => {
                             }}>
                             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                  style={{width: '90%'}}>
-                                <Box p={1} m={1}>
+                                <Box p={1} m={1} style={{marginRight: '30%'}}>
                                     Id
-                                </Box>
+                                </Box> 
+                                <Box p={1} m={1} >
+                                    Station name
+                                </Box>                                    
                             </Box>
                         </ListSubheader>
                         {bikeList.map((bike, index) => {
@@ -148,14 +147,37 @@ const BikeListPage = () => {
                                             <Box p={2} m={1}>
                                                 <ListItemText primary={bike.id}/>
                                             </Box>
+                                            <Box p={2} m={1}>
+                                                <ListItemText primary={bike.station == null ? "" : bike.station.name}/>
+                                            </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
+                                            <Button className={classes.cancelReservationButton} id="cancel_reservation_button"
+                                                    startIcon={<DeleteOutlineSharpIcon/>}
+                                                    onClick={() => setOpenCancelReservation(true)}
+                                                    style={{height: '100%'}}> CANCEL</Button>
                                             <Button className={classes.rentButton} id="rent_bike_button"
                                                     startIcon={<DirectionsBikeIcon/>}
                                                     onClick={() => setOpenRentBike(true)}> RENT</Button>
-                                            <Button className={classes.reserveBikeButton} id="reserve_bike_button"
-                                                    startIcon={<HourglassEmptyIcon/>}
-                                                    onClick={() => setOpenReserveBike(true)}> RESERVE</Button>
+                                            <Dialog open={openCancelReservation}
+                                                    keepMounted
+                                                    onClose={handleCloseCancelReservation}>
+                                                <DialogTitle
+                                                    id="alert-dialog-slide-title">{"Cancel reservation?"}</DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-slide-description">
+                                                        Do you really want to cancel reservation?
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={handleCloseCancelReservation} color="primary">
+                                                        No
+                                                    </Button>
+                                                    <Button onClick={cancelReservationClicked} color="primary">
+                                                        Yes
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
                                             <Dialog open={openRentBike}
                                                     keepMounted
                                                     onClose={handleCloseRentBike}>
@@ -175,25 +197,6 @@ const BikeListPage = () => {
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
-                                            <Dialog open={openReserveBike}
-                                                    keepMounted
-                                                    onClose={handleCloseReserveBike}>
-                                                <DialogTitle
-                                                    id="alert-dialog-slide-title">{"Reserve this bike?"}</DialogTitle>
-                                                <DialogContent>
-                                                    <DialogContentText id="alert-dialog-slide-description">
-                                                        Do you really want you reserve this bike?
-                                                    </DialogContentText>
-                                                </DialogContent>
-                                                <DialogActions>
-                                                    <Button onClick={handleCloseReserveBike} color="primary">
-                                                        No
-                                                    </Button>
-                                                    <Button onClick={reserveBikeClicked} color="primary">
-                                                        Yes
-                                                    </Button>
-                                                </DialogActions>
-                                            </Dialog>
                                         </ThemeProvider>
                                     </ListItem>
                                 </li>
@@ -205,4 +208,4 @@ const BikeListPage = () => {
         </div>
     );
 }
-export default BikeListPage;
+export default ReservedBikesListPage;

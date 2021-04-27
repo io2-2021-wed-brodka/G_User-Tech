@@ -9,16 +9,19 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
+    InputLabel,
     ListItem,
     ListItemText,
     ListSubheader
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import {Bike, BikeStatus, getBikesAtStation, rentBike, reserveBike} from "./Api/bikeApi";
-import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import {Bike, returnBike, getRentedBikes} from "./Api/bikeApi";
+import {getActiveStations, Station} from "./Api/StationApi";
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,13 +43,8 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: 'inherit',
             padding: 0,
         },
-        rentButton: {
-            backgroundColor: '#fdfd96 ',
-            variant: 'contained',
-            margin: '5px'
-        },
-        reserveBikeButton: {
-            backgroundColor: '#ffb347 ',
+        returnBikeButton: {
+            backgroundColor: '#f2e20e ',
             variant: 'contained',
             margin: '5px'
         },
@@ -72,13 +70,12 @@ const themeWarning = createMuiTheme({
         }
     },
 });
-
-
-const BikeListPage = () => {
+const RentedBikesListPage = () => {
     const classes = useStyles();
-    const [openRentBike, setOpenRentBike] = useState<boolean>(false);
-    const [openReserveBike, setOpenReserveBike] = useState<boolean>(false);
+    const [openCreateBike, setOpenRentBike] = useState<boolean>(false);
+    const [chosenStationId, setChosenStationId] = React.useState<string>("");
     const [bikeList, setBikeList] = React.useState<Bike[]>([]);
+    const [stationList, setStationList] = React.useState<Station[]>([]);
     const [selectedIndex, setSelectedIndex] = React.useState(-1);
     const [getBikesTrigger, setBikesTrigger] = React.useState(true);
     const handleBikeListItemClick = (
@@ -86,27 +83,23 @@ const BikeListPage = () => {
     ) => {
         setSelectedIndex(index);
     };
-    const handleCloseRentBike = () => {
+    const handleChangeChosenStation = (event: React.ChangeEvent<{ value: unknown }>) => {
+        setChosenStationId(String(event.target.value));
+    };
+    const handleOpenReturnBike = () => {
+        setChosenStationId(stationList[0].id);
+        setOpenRentBike(true);
+    };
+    const handleCloseReturnBike = () => {
         setOpenRentBike(false);
     };
-    const handleCloseReserveBike = () => {
-        setOpenReserveBike(false);
-    };
-    const rentBikeClicked = async () => {
-        await rentBike(bikeList[selectedIndex].id);
+    const handleReturnBike = async (bikeId: string) => {
+        returnBike(bikeId, chosenStationId).then(r => {});
         setOpenRentBike(false);
-        setBikesTrigger(!getBikesTrigger);
-    };
-    const reserveBikeClicked = async () => {
-        await reserveBike(bikeList[selectedIndex].id);
-        setOpenReserveBike(false);
         setBikesTrigger(!getBikesTrigger);
     };
     useEffect(() => {
-        // TODO(tkarwowski): Is there a better way to do this?
-        const url = window.location.href;
-        const stationId = url.match(/http:\/\/localhost:3000\/stations\/(?<stationId>[^/]*)\/bikes/)?.groups?.stationId || "";
-        getBikesAtStation(stationId).then(r => {
+        getRentedBikes().then(r => {
             if (r.isError) {
                 alert("Error");
                 return;
@@ -116,6 +109,17 @@ const BikeListPage = () => {
                 return {id: e.id, status: e.status, station: e.station}
             });
             setBikeList(list);
+        });
+        getActiveStations().then(r => {
+            if (r.isError) {
+                alert("Error");
+                return;
+            }
+            let listStation: Station[] = r.data as Station[] || [];
+            listStation = listStation.map(e => {
+                return {id: e.id, name: e.name, state: e.state, bikes: e.bikes}
+            });
+            setStationList(listStation);
         });
     }, [getBikesTrigger]);
     return (
@@ -150,47 +154,35 @@ const BikeListPage = () => {
                                             </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
-                                            <Button className={classes.rentButton} id="rent_bike_button"
+                                            <Button className={classes.returnBikeButton} id="return_bike_button"
                                                     startIcon={<DirectionsBikeIcon/>}
-                                                    onClick={() => setOpenRentBike(true)}> RENT</Button>
-                                            <Button className={classes.reserveBikeButton} id="reserve_bike_button"
-                                                    startIcon={<HourglassEmptyIcon/>}
-                                                    onClick={() => setOpenReserveBike(true)}> RESERVE</Button>
-                                            <Dialog open={openRentBike}
-                                                    keepMounted
-                                                    onClose={handleCloseRentBike}>
-                                                <DialogTitle
-                                                    id="alert-dialog-slide-title">{"Rent this bike?"}</DialogTitle>
+                                                    onClick={handleOpenReturnBike}> RETURN
+                                            </Button>
+                                            <Dialog disableBackdropClick open={openCreateBike} onClose={handleCloseReturnBike}>
+                                                <DialogTitle>Fill the form</DialogTitle>
                                                 <DialogContent>
-                                                    <DialogContentText id="alert-dialog-slide-description">
-                                                        Do you really want you rent this bike?
-                                                    </DialogContentText>
+                                                    <form className={classes.container}>
+                                                        <FormControl className={classes.formControl}>
+                                                            <InputLabel htmlFor="demo-dialog-native">
+                                                                station
+                                                            </InputLabel>
+                                                            <Select native value={chosenStationId} onChange={handleChangeChosenStation}
+                                                                    input={<Input/>}>
+                                                                {stationList.map((station) => {
+                                                                    return (
+                                                                        <option value={station.id}> {station.name} </option>
+                                                                    )
+                                                                })}
+                                                            </Select>
+                                                        </FormControl>
+                                                    </form>
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button onClick={handleCloseRentBike} color="primary">
-                                                        No
+                                                    <Button onClick={() => handleReturnBike(bike.id)} color="primary">
+                                                        OK
                                                     </Button>
-                                                    <Button onClick={rentBikeClicked} color="primary">
-                                                        Yes
-                                                    </Button>
-                                                </DialogActions>
-                                            </Dialog>
-                                            <Dialog open={openReserveBike}
-                                                    keepMounted
-                                                    onClose={handleCloseReserveBike}>
-                                                <DialogTitle
-                                                    id="alert-dialog-slide-title">{"Reserve this bike?"}</DialogTitle>
-                                                <DialogContent>
-                                                    <DialogContentText id="alert-dialog-slide-description">
-                                                        Do you really want you reserve this bike?
-                                                    </DialogContentText>
-                                                </DialogContent>
-                                                <DialogActions>
-                                                    <Button onClick={handleCloseReserveBike} color="primary">
-                                                        No
-                                                    </Button>
-                                                    <Button onClick={reserveBikeClicked} color="primary">
-                                                        Yes
+                                                    <Button onClick={handleCloseReturnBike} color="primary">
+                                                        Cancel
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
@@ -205,4 +197,4 @@ const BikeListPage = () => {
         </div>
     );
 }
-export default BikeListPage;
+export default RentedBikesListPage;
