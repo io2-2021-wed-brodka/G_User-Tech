@@ -54,11 +54,7 @@ const ReservedBikesListPage = () => {
                 alert("Error");
                 return;
             }
-            let list: Bike[] = r.data as Bike[] || [];
-            list = list.map(e => {
-                return {id: e.id, status: e.status, station: e.station}
-            });
-            setBikeList(list);
+            setBikeList(r.data?.bikes || []);
         });
     }, [getBikesTrigger]);
     return (

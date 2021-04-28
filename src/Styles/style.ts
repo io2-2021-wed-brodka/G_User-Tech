@@ -28,7 +28,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             flexWrap: 'wrap',
         },
         rentButton: {
-            backgroundColor: '#D11A2A',
+            backgroundColor: '#f2e20e',
             variant: 'contained',
             margin: '5px'
         },
