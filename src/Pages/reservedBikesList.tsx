@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {createMuiTheme, createStyles, makeStyles, Theme, ThemeProvider} from '@material-ui/core/styles';
-import './App.css';
-import './Layout/topbar.tsx';
+import {ThemeProvider} from '@material-ui/core/styles';
+import '../App.css';
+import '../Layout/topbar.tsx';
 import List from '@material-ui/core/List';
 import {
     Button,
@@ -15,63 +15,10 @@ import {
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import {Bike, getReservedBikes, rentBike, cancelReservation} from "./Api/bikeApi";
+import {Bike, getReservedBikes, rentBike, cancelReservation} from "../Api/bikeApi";
 import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        ListStyle: {
-            overflowY: 'auto',
-            opacity: '0.92',
-            marginLeft: '10%',
-            marginRight: '10%',
-            marginTop: '2%',
-            marginBottom: '2%',
-        },
-        ListFont: {
-            color: 'white'
-        },
-        listSection: {
-            backgroundColor: 'inherit',
-        },
-        ul: {
-            backgroundColor: 'inherit',
-            padding: 0,
-        },
-        rentButton: {
-            backgroundColor: '#f2e20e ',
-            variant: 'contained',
-            margin: '5px'
-        },
-        cancelReservationButton: {
-            backgroundColor: '#D11A2A ',
-            variant: 'contained',
-            margin: '5px'
-        },
-        container: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-        generalContainer: {
-            height: '91vh',
-            display: 'flex',
-            flexDirection: 'column'
-        }
-    }),
-);
-const themeWarning = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#950740'
-        }
-    },
-});
-
+import { themeWarning, useStyles } from "../Styles/style";
 
 const ReservedBikesListPage = () => {
     const classes = useStyles();
@@ -119,11 +66,7 @@ const ReservedBikesListPage = () => {
             <List className={classes.ListStyle} subheader={<li/>}>
                 <li className={classes.listSection}>
                     <ul className={classes.ul}>
-                        <ListSubheader
-                            style={{
-                                backgroundColor: '#4E4E50', display: 'flex', fontWeight: 'bold',
-                                height: '50px', borderRadius: '15px'
-                            }}>
+                        <ListSubheader className={classes.listSubheader}>
                             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                  style={{width: '90%'}}>
                                 <Box p={1} m={1} style={{marginRight: '30%'}}>
@@ -137,10 +80,7 @@ const ReservedBikesListPage = () => {
                         {bikeList.map((bike, index) => {
                             return (
                                 <li key={bike.id}>
-                                    <ListItem style={{
-                                        backgroundColor: '#69696e', color: 'white', display: 'flex',
-                                        height: '50px', marginBottom: '5px', marginTop: '5px', borderRadius: '15px'
-                                    }}
+                                    <ListItem className={classes.listItemStyle}
                                               onClick={() => handleBikeListItemClick(index)}>
                                         <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                              style={{width: '90%'}}>

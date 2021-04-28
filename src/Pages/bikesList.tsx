@@ -1,78 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {createMuiTheme, createStyles, makeStyles, Theme, ThemeProvider} from '@material-ui/core/styles';
-import './App.css';
-import './Layout/topbar.tsx';
+import {ThemeProvider} from '@material-ui/core/styles';
+import '../App.css';
+import '../Layout/topbar.tsx';
 import List from '@material-ui/core/List';
-import {
-    Button,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    ListItem,
-    ListItemText,
-    ListSubheader
-} from '@material-ui/core';
+import {Button, DialogActions, DialogContent, DialogContentText, DialogTitle,
+    ListItem, ListItemText, ListSubheader} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import {Bike, BikeStatus, getBikesAtStation, rentBike, reserveBike} from "./Api/bikeApi";
-import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
+import {Bike, getBikesAtStation, rentBike, reserveBike} from "../Api/bikeApi";
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        ListStyle: {
-            overflowY: 'auto',
-            opacity: '0.92',
-            marginLeft: '10%',
-            marginRight: '10%',
-            marginTop: '2%',
-            marginBottom: '2%',
-        },
-        ListFont: {
-            color: 'white'
-        },
-        listSection: {
-            backgroundColor: 'inherit',
-        },
-        ul: {
-            backgroundColor: 'inherit',
-            padding: 0,
-        },
-        rentButton: {
-            backgroundColor: '#fdfd96 ',
-            variant: 'contained',
-            margin: '5px'
-        },
-        reserveBikeButton: {
-            backgroundColor: '#ffb347 ',
-            variant: 'contained',
-            margin: '5px'
-        },
-        container: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-        generalContainer: {
-            height: '91vh',
-            display: 'flex',
-            flexDirection: 'column'
-        }
-    }),
-);
-const themeWarning = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#950740'
-        }
-    },
-});
-
+import { themeWarning, useStyles } from "../Styles/style";
 
 const BikeListPage = () => {
     const classes = useStyles();
@@ -123,11 +61,7 @@ const BikeListPage = () => {
             <List className={classes.ListStyle} subheader={<li/>}>
                 <li className={classes.listSection}>
                     <ul className={classes.ul}>
-                        <ListSubheader
-                            style={{
-                                backgroundColor: '#4E4E50', display: 'flex', fontWeight: 'bold',
-                                height: '50px', borderRadius: '15px'
-                            }}>
+                        <ListSubheader className={classes.listSubheader}>
                             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                  style={{width: '90%'}}>
                                 <Box p={1} m={1}>
@@ -138,10 +72,7 @@ const BikeListPage = () => {
                         {bikeList.map((bike, index) => {
                             return (
                                 <li key={bike.id}>
-                                    <ListItem style={{
-                                        backgroundColor: '#69696e', color: 'white', display: 'flex',
-                                        height: '50px', marginBottom: '5px', marginTop: '5px', borderRadius: '15px'
-                                    }}
+                                    <ListItem className={classes.listItemStyle}
                                               onClick={() => handleBikeListItemClick(index)}>
                                         <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                              style={{width: '90%'}}>
@@ -150,19 +81,24 @@ const BikeListPage = () => {
                                             </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
-                                            <Button className={classes.rentButton} id="rent_bike_button"
+                                            <Button className={classes.rentButton}
                                                     startIcon={<DirectionsBikeIcon/>}
-                                                    onClick={() => setOpenRentBike(true)}> RENT</Button>
-                                            <Button className={classes.reserveBikeButton} id="reserve_bike_button"
+                                                    onClick={() => setOpenRentBike(true)}> 
+                                                RENT
+                                            </Button>
+                                            <Button className={classes.reserveBikeButton}
                                                     startIcon={<HourglassEmptyIcon/>}
-                                                    onClick={() => setOpenReserveBike(true)}> RESERVE</Button>
+                                                    onClick={() => setOpenReserveBike(true)}>
+                                                RESERVE
+                                            </Button>
                                             <Dialog open={openRentBike}
                                                     keepMounted
                                                     onClose={handleCloseRentBike}>
-                                                <DialogTitle
-                                                    id="alert-dialog-slide-title">{"Rent this bike?"}</DialogTitle>
+                                                <DialogTitle>
+                                                    {"Rent this bike?"}
+                                                </DialogTitle>
                                                 <DialogContent>
-                                                    <DialogContentText id="alert-dialog-slide-description">
+                                                    <DialogContentText>
                                                         Do you really want you rent this bike?
                                                     </DialogContentText>
                                                 </DialogContent>
@@ -178,10 +114,11 @@ const BikeListPage = () => {
                                             <Dialog open={openReserveBike}
                                                     keepMounted
                                                     onClose={handleCloseReserveBike}>
-                                                <DialogTitle
-                                                    id="alert-dialog-slide-title">{"Reserve this bike?"}</DialogTitle>
+                                                <DialogTitle>
+                                                    {"Reserve this bike?"}
+                                                </DialogTitle>
                                                 <DialogContent>
-                                                    <DialogContentText id="alert-dialog-slide-description">
+                                                    <DialogContentText>
                                                         Do you really want you reserve this bike?
                                                     </DialogContentText>
                                                 </DialogContent>

@@ -1,22 +1,19 @@
-//import React from 'react';
 import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
 import './App.css';
 import './Layout/topbar.tsx';
 import {TopBar} from './Layout/topbar';
-import BikeListPage from './bikesList';
-import StationListPage from './stationList';
-import RentedBikesListPage from './rentedBikesList';
-import ReservedBikesListPage from './reservedBikesList';
-import bicycleWallpaper from './Resources/bikeWP.jpg';
-import {RegisterLoginPage} from "./Register";
-import {ProtectedRoute} from "./ProtectedRoute";
+import BikeListPage from './Pages/bikesList';
+import StationListPage from './Pages/stationList';
+import RentedBikesListPage from './Pages/rentedBikesList';
+import ReservedBikesListPage from './Pages/reservedBikesList';
+import {RegisterLoginPage} from "./Pages/Register";
+import {ProtectedRoute} from "./Pages/ProtectedRoute";
+import { useStyles } from "./Styles/style";
 
 export default function App() {
+    const classes = useStyles();
     return (
-        <div className="App" style={{
-            height: "100vh", display: "flex", flexDirection: "column", width: '100%',
-            backgroundImage: `url(${bicycleWallpaper})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'
-        }}>
+        <div className={classes.webpageStyle}>
             <Router>
                 <div>
                     <TopBar/>

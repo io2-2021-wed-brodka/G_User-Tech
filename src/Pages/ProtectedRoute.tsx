@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { Redirect, Route } from "react-router-dom"
-import { LoggedIn } from "./Layout/topbar"
+import { LoggedIn } from "../Layout/topbar"
 
 interface IProps {
     children: ReactNode;
