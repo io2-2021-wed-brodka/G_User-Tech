@@ -6,57 +6,8 @@ import {Animated} from "react-animated-css";
 import { useState} from "react";
 import 'animate.css';
 import Box from '@material-ui/core/Box';
-import { postLogin, postRegister } from './Api/UserApi';
-const useStyles = makeStyles((theme: Theme) =>
-createStyles({
-  formContainer: {
-    backgroundColor: '#aec6cf',
-    opacity: '0.95',
-    borderRadius: '15px',
-    display: 'flex',
-    flexDirection: 'column',
-    height: '500px',
-    marginTop: '50px',
-    width: '300px',
-    background: 'linear-gradient(rgba(0,0,255,0.5),transparent)',         
-  },
-  textFieldStyle: {
-      margin: '10px',
-      backgroundColor: 'white',
-      color: 'white',
-      
-  },
-  welcomeLabel: {
-    color: 'white',
-    marginTop: '10%',
-    fontSize: '35px',
-    marginBottom: '20px'
-  },
-  windowContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  formContainerOverlay: {
-    backgroundColor: '#aec6cf',
-    opacity: '0.95',
-    borderRadius: '15px',
-    display: 'flex',
-    flexDirection: 'column',
-    height: '500px',
-    marginTop: '50px',
-    width: '300px',  
-    background: 'linear-gradient(rgba(250,0,0,0.5),transparent)',   
-       
-  },
-  welcomeLabelSmall: {
-    color: 'white',
-    marginTop: '10%',
-    fontSize: '15px',
-    marginBottom: '20px'
-  },
- 
-}),
-);
+import { postLogin, postRegister } from '../Api/UserApi';
+import { useStyles } from '../Styles/style';
 
 export const RegisterLoginPage = () =>{
     const classes = useStyles();
@@ -64,12 +15,9 @@ export const RegisterLoginPage = () =>{
     const [signInOpen, setSignInOpen] = useState<boolean>(false);
     const [login, setLogin] = useState<string>("Login");
     const [password, setPassword] = useState<string>("Password");
-    const [loginRegister, setLoginRegister] = useState<string>("Login");
-    const [passwordRegister, setPasswordRegister] = useState<string>("Password");
     const handleOpen = () =>{
         setLoginOpen(!loginOpen);
         setSignInOpen(!signInOpen);
-        console.log(loginOpen);
     }    
     const handleChangeLoginLogin = (login: string) => {
         setLogin(login);
