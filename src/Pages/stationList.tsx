@@ -22,17 +22,11 @@ function StationListPage() {
     };
     useEffect(() => {
         getActiveStations().then(r => {
-            console.log(r)
             if (r.isError) {
                 alert("Error");
                 return;
             }
-            console.log(r.data);
-            let listStation: Station[] = r.data as Station[] || [];
-            listStation = listStation.map(e => {
-                return {id: e.id, name: e.name, state: e.state, bikes: e.bikes}
-            });
-            setStationList(listStation);
+            setStationList(r.data?.stations || []);
         });
     }, [getActiveStationsTrigger]);
     return (

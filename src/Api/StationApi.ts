@@ -1,5 +1,5 @@
 import {BASE_URL} from "./urls"
-import {axiosHandleResponse, getRequestConfig} from "./ApiUtils"
+import {axiosHandleResponse, getRequestConfig, IApiResponse} from "./ApiUtils"
 import {Bike} from "./bikeApi"
 import axios from "axios";
 
@@ -16,7 +16,11 @@ export interface Station {
     bikes: Bike[];
 }
 
-export const getActiveStations = async () => {
+interface Stations{
+    stations: Station[];
+}
+
+export const getActiveStations = async (): Promise<IApiResponse<Stations>>  => {
     return axios.get(station_active_url, getRequestConfig())
         .then(r => axiosHandleResponse(r));
 }

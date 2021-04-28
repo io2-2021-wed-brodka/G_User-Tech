@@ -1,6 +1,6 @@
 import {BASE_URL} from "./urls"
 import axios from "axios";
-import {axiosHandleResponse, getRequestConfig} from "./ApiUtils";
+import {axiosHandleResponse, getRequestConfig, IApiResponse} from "./ApiUtils";
 
 export enum BikeStatus {
     Available, Rented, Reserved, Blocked,
@@ -15,7 +15,11 @@ export interface Bike {
     };
 }
 
-export const getBikesAtStation = async (stationId: string) => {
+interface Bikes{
+    bikes: Bike[];
+}
+
+export const getBikesAtStation = async (stationId: string): Promise<IApiResponse<Bikes>> => {
     return axios.get(`${BASE_URL}stations/${stationId}/bikes/`, getRequestConfig())
         .then(r => axiosHandleResponse(r));
 }
@@ -30,12 +34,12 @@ export const reserveBike = async (bikeId: string) => {
         .then(r => axiosHandleResponse(r));
 }
 
-export const getRentedBikes = async () => {
+export const getRentedBikes = async (): Promise<IApiResponse<Bikes>> => {
     return axios.get(`${BASE_URL}bikes/rented/`, getRequestConfig())
         .then(r => axiosHandleResponse(r));
 }
 
-export const getReservedBikes = async () => {
+export const getReservedBikes = async (): Promise<IApiResponse<Bikes>> => {
     return axios.get(`${BASE_URL}bikes/reserved/`, getRequestConfig())
         .then(r => axiosHandleResponse(r));
 }
