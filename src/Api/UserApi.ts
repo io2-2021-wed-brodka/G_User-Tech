@@ -27,7 +27,6 @@ const axiosHandleLoginResponse = async <T>(response: AxiosResponse): Promise<IAp
 
 const axiosHandleRegisterResponse = async <T>(response: AxiosResponse): Promise<IApiResponse<T>> => {
     if (response.status >= 200 && response.status < 300) {
-        window.location.href="/login"; // redirect to login page after register
         return {
             isError: false,
             responseCode: response.status,

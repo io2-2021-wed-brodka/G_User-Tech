@@ -39,8 +39,13 @@ export const RegisterLoginPage = () =>{
     }
     const onEnterDown = (event : any) => {
         if(event.key == "Enter") {
-          event.preventDefault();
-          loginOpen ? handleLogging() : handleRegister();
+            event.preventDefault();
+            if (loginOpen) 
+                handleLogging() 
+            else {
+                handleRegister();
+                handleOpen(); // after register (succesful or not) switch to login page
+            }
         }
     }
     return (
