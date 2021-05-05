@@ -55,7 +55,7 @@ export const RegisterLoginPage = () =>{
                 <Box p={1} m={1}>
                     {loginOpen ?
                         <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={loginOpen}   >
-                            <Container fixed className={classes.formContainer} >
+                            <Container fixed className={classes.formContainerBlue} >
                                 <div className={classes.welcomeLabel}>Log in</div>
                                 <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
                                     onChange={(event: any) => handleChangeLoginLogin(event.target.value)} onKeyDown={onEnterDown}/>
@@ -65,18 +65,18 @@ export const RegisterLoginPage = () =>{
                             </Container>
                         </Animated>              
                     :  
-                        <Container fixed className={classes.formContainerOverlay}>
+                        <Container fixed className={classes.formContainerBlue}>
                             <div className={classes.welcomeLabel}>Hello, Friend!</div>
                             <div className={classes.welcomeLabelSmall}>Enter your personal data and begin journey with us</div>
-                            <div className={classes.welcomeLabelSmall}>Don't have account yet? Sing up here!</div>
-                            <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Sign in</Button>
+                            <div className={classes.welcomeLabelSmall}>Have account already?</div>
+                            <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Log in</Button>
                         </Container>                      
                     }
                 </Box>
                 <Box p={1} m={1}>
                     {signInOpen ?
                         <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={signInOpen}>
-                            <Container fixed className={classes.formContainer}>
+                            <Container fixed className={classes.formContainerRed}>
                                 <div className={classes.welcomeLabel}>Sign up</div>
                                 <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
                                     onChange={(event: any) => handleChangeLoginRegister(event.target.value)} onKeyDown={onEnterDown}/>
@@ -87,10 +87,10 @@ export const RegisterLoginPage = () =>{
                             </Container>
                         </Animated>
                     :
-                        <Container fixed className={classes.formContainerOverlay}>
+                        <Container fixed className={classes.formContainerRed}>
                             <div className={classes.welcomeLabel}>Welcome Back!</div>
                             <div className={classes.welcomeLabelSmall}>To keep conected with us please login with your personal data</div>
-                            <div className={classes.welcomeLabelSmall}>Have account already? Sign in here!</div>
+                            <div className={classes.welcomeLabelSmall}>Don't have account yet?</div>
                             <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Sign up</Button>
                         </Container>           
             }

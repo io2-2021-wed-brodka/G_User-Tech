@@ -47,13 +47,13 @@ export const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             flexDirection: 'column'
         },
-        formContainer: {
+        formContainerBlue: {
             backgroundColor: '#aec6cf',
             opacity: '0.95',
             borderRadius: '15px',
             display: 'flex',
             flexDirection: 'column',
-            height: '500px',
+            height: '400px',
             marginTop: '50px',
             width: '300px',
             background: 'linear-gradient(rgba(0,0,255,0.5),transparent)',         
@@ -67,19 +67,20 @@ export const useStyles = makeStyles((theme: Theme) =>
             color: 'white',
             marginTop: '10%',
             fontSize: '35px',
-            marginBottom: '20px'
+            marginBottom: '20px',
+            textAlign: 'center'
           },
           windowContainer: {
             display: 'flex',
             flexDirection: 'column',
           },
-          formContainerOverlay: {
+          formContainerRed: {
             backgroundColor: '#aec6cf',
             opacity: '0.95',
             borderRadius: '15px',
             display: 'flex',
             flexDirection: 'column',
-            height: '500px',
+            height: '400px',
             marginTop: '50px',
             width: '300px',  
             background: 'linear-gradient(rgba(250,0,0,0.5),transparent)',             
@@ -88,7 +89,8 @@ export const useStyles = makeStyles((theme: Theme) =>
             color: 'white',
             marginTop: '10%',
             fontSize: '15px',
-            marginBottom: '20px'
+            marginBottom: '20px',
+            textAlign: 'center'
           },
         returnBikeButton: {
             backgroundColor: '#f2e20e ',
