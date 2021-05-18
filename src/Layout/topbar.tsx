@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       flexGrow: 1,
-      fontFamily: "Goblin One",
+      marginRight: "20px",
     },
     toolbar: {
       display: "flex",

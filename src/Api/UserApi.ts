@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios";
 import {
   axiosHandleResponse,
   getRequestConfig,
+  handleError,
   IApiResponse,
 } from "./ApiUtils";
 
@@ -71,8 +72,9 @@ export const postLogout = async () => {
       sessionStorage.clear();
       window.location.href = "/login";
     })
-    .catch(() => {
-      console.log("error");
+    .catch((err) => {
+      handleError(err);
+      return err;
     });
 };
 

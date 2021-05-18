@@ -18,7 +18,6 @@ export const MainMenuPage = () => {
           marginRight: "30%",
           marginLeft: "30%",
           background: "linear-gradient(#69696e, #4E4E50)",
-          fontFamily: "Goblin One",
           color: "white",
         }}
       >
@@ -41,7 +40,6 @@ export const MainMenuPage = () => {
             marginLeft: "30%",
             width: "20%",
             background: "linear-gradient(to left,#4E4E50, #69696e)",
-            fontFamily: "Goblin One",
             color: "white",
           }}
         >
@@ -59,7 +57,6 @@ export const MainMenuPage = () => {
             marginRight: "20%",
             width: "20%",
             background: "linear-gradient(to right,#4E4E50, #69696e)",
-            fontFamily: "Goblin One",
             color: "white",
           }}
         >
