@@ -96,7 +96,7 @@ const BikeListPage = () => {
                       style={{ width: "90%" }}
                     >
                       <Box p={2} m={1}>
-                        <ListItemText primary={bike.id} />
+                        <ListItemText primary={prettify(bike.id)} />
                       </Box>
                     </Box>
                     <ThemeProvider theme={themeWarning}>
