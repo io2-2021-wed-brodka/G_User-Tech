@@ -19,6 +19,7 @@ import { Bike, getBikesAtStation, rentBike, reserveBike } from "../Api/bikeApi";
 import DirectionsBikeIcon from "@material-ui/icons/DirectionsBike";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import { themeWarning, useStyles } from "../Styles/style";
+import {prettify} from "../utils";
 
 const BikeListPage = () => {
   const classes = useStyles();
@@ -95,7 +96,7 @@ const BikeListPage = () => {
                       style={{ width: "90%" }}
                     >
                       <Box p={2} m={1}>
-                        <ListItemText primary={bike.id} />
+                        <ListItemText primary={prettify(bike.id)} />
                       </Box>
                     </Box>
                     <ThemeProvider theme={themeWarning}>
