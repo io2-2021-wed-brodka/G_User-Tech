@@ -11,6 +11,7 @@ import {Bike, getBikesAtStation, rentBike, reserveBike} from "../Api/bikeApi";
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import { themeWarning, useStyles } from "../Styles/style";
+import {prettify} from "../utils";
 
 const BikeListPage = () => {
     const classes = useStyles();
