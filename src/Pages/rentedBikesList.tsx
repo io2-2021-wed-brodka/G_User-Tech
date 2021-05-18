@@ -14,6 +14,7 @@ import {Bike, returnBike, getRentedBikes} from "../Api/bikeApi";
 import {getActiveStations, Station} from "../Api/StationApi";
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import { themeWarning, useStyles } from "../Styles/style";
+import {prettify} from "../utils";
 
 const RentedBikesListPage = () => {
     const classes = useStyles();
@@ -80,7 +81,7 @@ const RentedBikesListPage = () => {
                                         <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                              style={{width: '90%'}}>
                                             <Box p={2} m={1}>
-                                                <ListItemText primary={bike.id}/>
+                                                <ListItemText primary={prettify(bike.id)}/>
                                             </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
