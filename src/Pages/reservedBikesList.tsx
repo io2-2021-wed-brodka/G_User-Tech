@@ -19,6 +19,7 @@ import {Bike, getReservedBikes, rentBike, cancelReservation} from "../Api/bikeAp
 import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import { themeWarning, useStyles } from "../Styles/style";
+import {prettify} from "../utils";
 
 const ReservedBikesListPage = () => {
     const classes = useStyles();
@@ -81,7 +82,7 @@ const ReservedBikesListPage = () => {
                                         <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                              style={{width: '90%'}}>
                                             <Box p={2} m={1}>
-                                                <ListItemText primary={bike.id}/>
+                                                <ListItemText primary={prettify(bike.id)}/>
                                             </Box>
                                             <Box p={2} m={1}>
                                                 <ListItemText primary={bike.station == null ? "" : bike.station.name}/>
