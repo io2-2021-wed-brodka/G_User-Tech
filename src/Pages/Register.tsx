@@ -8,6 +8,7 @@ import 'animate.css';
 import Box from '@material-ui/core/Box';
 import { postLogin, postRegister } from '../Api/UserApi';
 import { useStyles } from '../Styles/style';
+import { userLoginOpen } from "../Layout/topbar"
 
 export const RegisterLoginPage = () =>{
     const classes = useStyles();
@@ -26,7 +27,7 @@ export const RegisterLoginPage = () =>{
         setPassword(password);
     }
     const handleLogging = () => {
-        postLogin(login, password);
+        postLogin(login, password, userLoginOpen ? "user" : "tech");
     }
     const handleChangeLoginRegister = (login: string) => {
         setLogin(login);
@@ -50,52 +51,56 @@ export const RegisterLoginPage = () =>{
     }
     return (
         <div className={classes.windowContainer}>
-            <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-                                 >
-                <Box p={1} m={1}>
-                    {loginOpen ?
-                        <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={loginOpen}   >
-                            <Container fixed className={classes.formContainerBlue} >
-                                <div className={classes.welcomeLabel}>Log in</div>
-                                <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
-                                    onChange={(event: any) => handleChangeLoginLogin(event.target.value)} onKeyDown={onEnterDown}/>
-                                <TextField id="standard-password" label="Password" type="password" variant="filled" className={classes.textFieldStyle}
-                                    onChange={(event: any) => handleChangePasswordLogin(event.target.value)} onKeyDown={onEnterDown}/>
-                                <Button variant="contained" style={{borderRadius: '15px'}} onClick={handleLogging}> Log in</Button>
-                            </Container>
-                        </Animated>              
-                    :  
-                        <Container fixed className={classes.formContainerBlue}>
-                            <div className={classes.welcomeLabel}>Hello, Friend!</div>
-                            <div className={classes.welcomeLabelSmall}>Enter your personal data and begin journey with us</div>
-                            <div className={classes.welcomeLabelSmall}>Have account already?</div>
-                            <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Log in</Button>
-                        </Container>                      
-                    }
-                </Box>
-                <Box p={1} m={1}>
-                    {signInOpen ?
-                        <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={signInOpen}>
+            {userLoginOpen?
+                <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
+                                    >
+                    <Box p={1} m={1}>
+                        {loginOpen ?
+                            <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={loginOpen}   >
+                                <Container fixed className={classes.formContainerBlue} >
+                                    <div className={classes.welcomeLabel}>Log in</div>
+                                    <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
+                                        onChange={(event: any) => handleChangeLoginLogin(event.target.value)} onKeyDown={onEnterDown}/>
+                                    <TextField id="standard-password" label="Password" type="password" variant="filled" className={classes.textFieldStyle}
+                                        onChange={(event: any) => handleChangePasswordLogin(event.target.value)} onKeyDown={onEnterDown}/>
+                                    <Button variant="contained" style={{borderRadius: '15px'}} onClick={handleLogging}> Log in</Button>
+                                </Container>
+                            </Animated>              
+                        :  
+                            <Container fixed className={classes.formContainerBlue}>
+                                <div className={classes.welcomeLabel}>Hello, Friend!</div>
+                                <div className={classes.welcomeLabelSmall}>Enter your personal data and begin journey with us</div>
+                                <div className={classes.welcomeLabelSmall}>Have account already?</div>
+                                <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Log in</Button>
+                            </Container>                      
+                        }
+                    </Box>
+                    <Box p={1} m={1}>
+                        {signInOpen ?
+                            <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={signInOpen}>
+                                <Container fixed className={classes.formContainerRed}>
+                                    <div className={classes.welcomeLabel}>Sign up</div>
+                                    <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
+                                        onChange={(event: any) => handleChangeLoginRegister(event.target.value)} onKeyDown={onEnterDown}/>
+                                    <TextField id="standard-password" type="password" label="Password" variant="filled" className={classes.textFieldStyle}
+                                        onChange={(event: any) => handleChangePasswordRegister(event.target.value)} onKeyDown={onEnterDown}/>
+                                    {/* <TextField id="standard-password-confirm" label="Password Confirm" variant="filled" className={classes.textFieldStyle}/> */}
+                                    <Button variant="contained" style={{borderRadius: '15px'}} onClick={() => {handleRegister(); handleOpen()} }> Sign up</Button>
+                                </Container>
+                            </Animated>
+                        :
                             <Container fixed className={classes.formContainerRed}>
-                                <div className={classes.welcomeLabel}>Sign up</div>
-                                <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
-                                    onChange={(event: any) => handleChangeLoginRegister(event.target.value)} onKeyDown={onEnterDown}/>
-                                <TextField id="standard-password" type="password" label="Password" variant="filled" className={classes.textFieldStyle}
-                                    onChange={(event: any) => handleChangePasswordRegister(event.target.value)} onKeyDown={onEnterDown}/>
-                                {/* <TextField id="standard-password-confirm" label="Password Confirm" variant="filled" className={classes.textFieldStyle}/> */}
-                                <Button variant="contained" style={{borderRadius: '15px'}} onClick={() => {handleRegister(); handleOpen()} }> Sign up</Button>
-                            </Container>
-                        </Animated>
-                    :
-                        <Container fixed className={classes.formContainerRed}>
-                            <div className={classes.welcomeLabel}>Welcome Back!</div>
-                            <div className={classes.welcomeLabelSmall}>To keep conected with us please login with your personal data</div>
-                            <div className={classes.welcomeLabelSmall}>Don't have account yet?</div>
-                            <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Sign up</Button>
-                        </Container>           
+                                <div className={classes.welcomeLabel}>Welcome Back!</div>
+                                <div className={classes.welcomeLabelSmall}>To keep conected with us please login with your personal data</div>
+                                <div className={classes.welcomeLabelSmall}>Don't have account yet?</div>
+                                <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Sign up</Button>
+                            </Container>           
+                        }
+                    </Box>
+                </Box>  
+            :
+                <p>elllo</p>
             }
-                </Box>
-            </Box>  
         </div>
     )
 }

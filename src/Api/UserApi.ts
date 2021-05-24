@@ -50,12 +50,12 @@ const axiosHandleRegisterResponse = async <T>(
   }
 };
 
-export const postLogin = async (login: string, password: string) => {
+export const postLogin = async (login: string, password: string, role: string) => {
   axios
     .post(login_url, {
       login: login,
       password: password,
-      role: "user",
+      role: role,
     })
     .then((r) => axiosHandleLoginResponse(r))
     .catch((r) => {

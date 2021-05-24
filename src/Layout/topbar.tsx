@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   createMuiTheme,
   createStyles,
@@ -50,6 +50,12 @@ const theme = createMuiTheme({
     },
   },
 });
+
+export let userLoginOpen = true;
+const setUserLoginOpen = (open: boolean) => {
+  userLoginOpen = open;
+}
+
 export const LoggedIn = () => {
   return sessionStorage.length != 0;
 };
@@ -57,6 +63,12 @@ export const TopBar: React.FC = () => {
   const classes = useStyles();
   const handleLogout = () => {
     postLogout();
+  };
+  const handleLogInAsUser = () => {
+    setUserLoginOpen(true);
+  };
+  const handleLogInAsTechnician = () => {
+    setUserLoginOpen(false);
   };
   return (
     <div className={classes.root}>
@@ -139,9 +151,21 @@ export const TopBar: React.FC = () => {
                   className={classes.title}
                   component={Link}
                   to="/login"
+                  onClick={handleLogInAsUser}
                 >
                   {" "}
-                  Login{" "}
+                  Login as User{" "}
+                </Button>
+                <Button
+                  color="inherit"
+                  startIcon={<PersonOutlineIcon />}
+                  className={classes.title}
+                  component={Link}
+                  to="/login"
+                  onClick={handleLogInAsTechnician}
+                >
+                  {" "}
+                  Login as Technician{" "}
                 </Button>
               </div>
             </Toolbar>
