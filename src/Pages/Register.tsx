@@ -8,9 +8,14 @@ import 'animate.css';
 import Box from '@material-ui/core/Box';
 import { postLogin, postRegister } from '../Api/UserApi';
 import { useStyles } from '../Styles/style';
-import { userLoginOpen } from "../Layout/topbar"
 
-export const RegisterLoginPage = () =>{
+
+interface ILoginTypeProps {
+    userLoginOpen: boolean;
+}
+
+
+export const RegisterLoginPage = ({ userLoginOpen }: ILoginTypeProps) =>{
     const classes = useStyles();
     const [loginOpen, setLoginOpen] = useState<boolean>(true);
     const [signInOpen, setSignInOpen] = useState<boolean>(false);
@@ -99,7 +104,33 @@ export const RegisterLoginPage = () =>{
                     </Box>
                 </Box>  
             :
-                <p>elllo</p>
+                <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center">
+                    <Container fixed className={classes.formContainerOrange}>
+                    <div className={classes.welcomeLabel}>Log in as Technician</div>
+                    <TextField
+                        label="Login"
+                        variant="filled"
+                        className={classes.textFieldStyle}
+                        onChange={(event: any) => handleChangeLoginLogin(event.target.value)}
+                        onKeyDown={onEnterDown}
+                    />
+                    <TextField
+                        type="password"
+                        label="Password"
+                        variant="filled"
+                        className={classes.textFieldStyle}
+                        onChange={(event: any) => handleChangePasswordLogin(event.target.value)}
+                        onKeyDown={onEnterDown}
+                    />
+                    <Button
+                        variant="contained"
+                        style={{ borderRadius: "15px" }}
+                        onClick={handleLogging}
+                    >
+                        Log in
+                    </Button>
+                    </Container>
+                </Box>
             }
         </div>
     )

@@ -15,6 +15,7 @@ import LocalParkingIcon from "@material-ui/icons/LocalParking";
 import { Link } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import Wrench from "@material-ui/icons/Build";
 import { postLogout } from "../Api/UserApi";
 import BookIcon from "@material-ui/icons/Book";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
@@ -51,24 +52,19 @@ const theme = createMuiTheme({
   },
 });
 
-export let userLoginOpen = true;
-const setUserLoginOpen = (open: boolean) => {
-  userLoginOpen = open;
-}
-
 export const LoggedIn = () => {
   return sessionStorage.length != 0;
 };
-export const TopBar: React.FC = () => {
+
+interface ILoginTypeProps {
+  handleLogInAsUser: () => void;
+  handleLogInAsTechnician: () => void;
+}
+
+export const TopBar = ({ handleLogInAsUser, handleLogInAsTechnician}: ILoginTypeProps) => {
   const classes = useStyles();
   const handleLogout = () => {
     postLogout();
-  };
-  const handleLogInAsUser = () => {
-    setUserLoginOpen(true);
-  };
-  const handleLogInAsTechnician = () => {
-    setUserLoginOpen(false);
   };
   return (
     <div className={classes.root}>
@@ -154,18 +150,18 @@ export const TopBar: React.FC = () => {
                   onClick={handleLogInAsUser}
                 >
                   {" "}
-                  Login as User{" "}
+                  Log In As User{" "}
                 </Button>
                 <Button
                   color="inherit"
-                  startIcon={<PersonOutlineIcon />}
+                  startIcon={<Wrench />}
                   className={classes.title}
                   component={Link}
                   to="/login"
                   onClick={handleLogInAsTechnician}
                 >
                   {" "}
-                  Login as Technician{" "}
+                  Log In As Technician{" "}
                 </Button>
               </div>
             </Toolbar>

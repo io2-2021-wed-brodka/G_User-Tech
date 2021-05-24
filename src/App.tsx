@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useState } from "react";
 import "./App.css";
 import "./Layout/topbar.tsx";
 import { TopBar } from "./Layout/topbar";
@@ -13,11 +14,18 @@ import { MainMenuPage } from "./Pages/mainPage";
 
 export default function App() {
   const classes = useStyles();
+  const [userLoginOpen, setUserLoginOpen] = useState<boolean>(true);
+  const handleLogInAsUser = () => {
+    setUserLoginOpen(true);
+  };
+  const handleLogInAsTechnician = () => {
+    setUserLoginOpen(false);
+  };
   return (
     <div className={classes.webpageStyle}>
       <Router>
         <div>
-          <TopBar />
+          <TopBar handleLogInAsUser={handleLogInAsUser} handleLogInAsTechnician={handleLogInAsTechnician}/>
           <Switch>
             <ProtectedRoute path="/stations/:id/bikes">
               <BikeListPage />
@@ -31,11 +39,8 @@ export default function App() {
             <ProtectedRoute path="/bikes/reserved">
               <ReservedBikesListPage />
             </ProtectedRoute>
-            <Route path="/register">
-              <RegisterLoginPage />
-            </Route>
             <Route path="/login">
-              <RegisterLoginPage />
+              <RegisterLoginPage userLoginOpen={userLoginOpen}/>
             </Route>
             <ProtectedRoute path="/main-menu">
               <MainMenuPage />
