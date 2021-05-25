@@ -102,3 +102,14 @@ export const cancelReservation = async (bikeId: string) => {
       return err;
     });
 };
+
+export const reportMalfunction = async (bikeId: string, description: string) => {
+  //TODO unfinished
+  return axios
+    .post(`${BASE_URL}malfunctions/`, { id: bikeId, description: description}, getRequestConfig())
+    .then((r) => axiosHandleResponse(r))
+    .catch((err) => {
+      handleError(err);
+      return err;
+    });
+};

@@ -113,6 +113,12 @@ export const useStyles = makeStyles((theme: Theme) =>
             variant: 'contained',
             margin: '5px'
         },
+        reportMalfunctionButton: {
+            backgroundColor: '#ff581a ',
+            variant: 'contained',
+            margin: '5px',
+            lineHeight: 1
+        },
         listSubheader: {
             backgroundColor: '#4E4E50', 
             display: 'flex', 

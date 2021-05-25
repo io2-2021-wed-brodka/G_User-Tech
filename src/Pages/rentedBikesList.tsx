@@ -4,26 +4,28 @@ import '../App.css';
 import '../Layout/topbar.tsx';
 import List from '@material-ui/core/List';
 import {Button, DialogActions, DialogContent, DialogTitle, InputLabel,
-    ListItem, ListItemText, ListSubheader} from '@material-ui/core';
+    ListItem, ListItemText, ListSubheader, Input, TextField } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
-import {Bike, returnBike, getRentedBikes} from "../Api/bikeApi";
+import {Bike, returnBike, getRentedBikes, reportMalfunction} from "../Api/bikeApi";
 import {getActiveStations, Station} from "../Api/StationApi";
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import { themeWarning, useStyles } from "../Styles/style";
 import {prettify} from "../utils";
 
 const RentedBikesListPage = () => {
     const classes = useStyles();
     const [openCreateBike, setOpenRentBike] = useState<boolean>(false);
+    const [openReportMalfunction, setOpenReportMalfunction] = useState<boolean>(false);
     const [chosenStationId, setChosenStationId] = React.useState<string>("");
     const [bikeList, setBikeList] = React.useState<Bike[]>([]);
     const [stationList, setStationList] = React.useState<Station[]>([]);
     const [selectedIndex, setSelectedIndex] = React.useState(-1);
     const [getBikesTrigger, setBikesTrigger] = React.useState(true);
+    const [malfunctionDescription, setMalfunctionDescription] = React.useState("");
     const handleBikeListItemClick = (
         index: number,
     ) => {
@@ -44,6 +46,20 @@ const RentedBikesListPage = () => {
         setOpenRentBike(false);
         setBikesTrigger(!getBikesTrigger);
     };
+    const handleOpenReportMalfunction = () => {
+        setMalfunctionDescription("");
+        setOpenReportMalfunction(true);
+    };
+    const handleCloseReportMalfunction = () => {
+        setOpenReportMalfunction(false);
+    };
+    const handleReportMalfunction = async (bikeId: string) => {
+        reportMalfunction(bikeId, malfunctionDescription);
+        setOpenReportMalfunction(false);
+    };
+    const handleChangeMalfunctionDescription = (description: string) => {
+        setMalfunctionDescription(description);
+    }
     useEffect(() => {
         getRentedBikes().then(r => {
             if (r.isError) {
@@ -95,7 +111,7 @@ const RentedBikesListPage = () => {
                                                     <form className={classes.container}>
                                                         <FormControl className={classes.formControl}>
                                                             <InputLabel htmlFor="demo-dialog-native">
-                                                                station
+                                                                Station
                                                             </InputLabel>
                                                             <Select native value={chosenStationId} onChange={handleChangeChosenStation}
                                                                     input={<Input/>}>
@@ -113,6 +129,34 @@ const RentedBikesListPage = () => {
                                                         OK
                                                     </Button>
                                                     <Button onClick={handleCloseReturnBike} color="primary">
+                                                        Cancel
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                            <Button className={classes.reportMalfunctionButton} id="report_malfunction_button"
+                                                    startIcon={<ReportProblemIcon/>}
+                                                    onClick={handleOpenReportMalfunction}> REPORT MALFUNCTION
+                                            </Button>
+                                            <Dialog disableBackdropClick open={openReportMalfunction} onClose={handleCloseReportMalfunction}>
+                                                <DialogTitle>Fill the form</DialogTitle>
+                                                <DialogContent>
+                                                    <form className={classes.container}>
+                                                        <FormControl className={classes.formControl}>
+                                                        <label>Enter malfunction description: </label>
+                                                        <TextField
+                                                            multiline
+                                                            rows={10}
+                                                            variant="outlined"
+                                                            onChange={(event: any) => handleChangeMalfunctionDescription(event.target.value)}
+                                                        />
+                                                        </FormControl>
+                                                    </form>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={() => handleReportMalfunction(bike.id)} color="primary">
+                                                        Send
+                                                    </Button>
+                                                    <Button onClick={handleCloseReportMalfunction} color="primary">
                                                         Cancel
                                                     </Button>
                                                 </DialogActions>

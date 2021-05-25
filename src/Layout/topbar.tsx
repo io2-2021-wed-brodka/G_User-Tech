@@ -15,7 +15,7 @@ import LocalParkingIcon from "@material-ui/icons/LocalParking";
 import { Link } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import Wrench from "@material-ui/icons/Build";
+import WrenchIcon from "@material-ui/icons/BuildOutlined";
 import { postLogout } from "../Api/UserApi";
 import BookIcon from "@material-ui/icons/Book";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
@@ -56,12 +56,12 @@ export const LoggedIn = () => {
   return sessionStorage.length != 0;
 };
 
-interface ILoginTypeProps {
+interface ILoginHandlersProps {
   handleLogInAsUser: () => void;
   handleLogInAsTechnician: () => void;
 }
 
-export const TopBar = ({ handleLogInAsUser, handleLogInAsTechnician}: ILoginTypeProps) => {
+export const TopBar = ({ handleLogInAsUser, handleLogInAsTechnician}: ILoginHandlersProps) => {
   const classes = useStyles();
   const handleLogout = () => {
     postLogout();
@@ -154,7 +154,7 @@ export const TopBar = ({ handleLogInAsUser, handleLogInAsTechnician}: ILoginType
                 </Button>
                 <Button
                   color="inherit"
-                  startIcon={<Wrench />}
+                  startIcon={<WrenchIcon />}
                   className={classes.title}
                   component={Link}
                   to="/login"
