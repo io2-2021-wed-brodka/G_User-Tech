@@ -85,17 +85,6 @@ export const useStyles = makeStyles((theme: Theme) =>
             width: '300px',  
             background: 'linear-gradient(rgba(250,0,0,0.5),transparent)',             
           },
-          formContainerOrange: {
-            backgroundColor: '#aec6cf',
-            opacity: '0.95',
-            borderRadius: '15px',
-            display: 'flex',
-            flexDirection: 'column',
-            height: '400px',
-            marginTop: '50px',
-            width: '300px',  
-            background: 'linear-gradient(rgba(255,125,0,0.8),transparent)',             
-          },
           welcomeLabelSmall: {
             color: 'white',
             marginTop: '10%',
@@ -115,6 +104,12 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         reportMalfunctionButton: {
             backgroundColor: '#ff581a ',
+            variant: 'contained',
+            margin: '5px',
+            lineHeight: 1
+        },
+        malfunctionDescriptionButton: {
+            backgroundColor: '#2ca5b8 ',
             variant: 'contained',
             margin: '5px',
             lineHeight: 1

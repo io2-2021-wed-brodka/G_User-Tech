@@ -9,7 +9,8 @@ import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {Bike, returnBike, getRentedBikes, reportMalfunction} from "../Api/bikeApi";
+import {Bike, returnBike, getRentedBikes} from "../Api/bikeApi";
+import { reportMalfunction } from "../Api/malfunctionsApi"
 import {getActiveStations, Station} from "../Api/StationApi";
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
