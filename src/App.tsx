@@ -11,21 +11,30 @@ import { RegisterLoginPage } from "./Pages/Register";
 import { ProtectedRoute } from "./Pages/ProtectedRoute";
 import { useStyles } from "./Styles/style";
 import { MainMenuPage } from "./Pages/mainPage";
+import { MalfunctionsListPage } from "./Pages/malfunctionsListPage";
 
+let userOpen: boolean = true;
+// const setLoginOpen = (open: boolean) => {
+//   userOpen = open;
+// }
 export default function App() {
   const classes = useStyles();
   const [userLoginOpen, setUserLoginOpen] = useState<boolean>(true);
   const handleLogInAsUser = () => {
+    console.log("set as true")
     setUserLoginOpen(true);
+    userOpen=true;
   };
   const handleLogInAsTechnician = () => {
+    console.log("set as falsz")
     setUserLoginOpen(false);
+    userOpen=false;
   };
   return (
     <div className={classes.webpageStyle}>
       <Router>
         <div>
-          <TopBar handleLogInAsUser={handleLogInAsUser} handleLogInAsTechnician={handleLogInAsTechnician}/>
+          <TopBar />
           <Switch>
             <ProtectedRoute path="/stations/:id/bikes">
               <BikeListPage />
@@ -40,10 +49,13 @@ export default function App() {
               <ReservedBikesListPage />
             </ProtectedRoute>
             <Route path="/login">
-              <RegisterLoginPage userLoginOpen={userLoginOpen}/>
+              <RegisterLoginPage />
             </Route>
             <ProtectedRoute path="/main-menu">
               <MainMenuPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/malfunctions">
+              <MalfunctionsListPage/>
             </ProtectedRoute>
             <Route path="/"></Route>
           </Switch>

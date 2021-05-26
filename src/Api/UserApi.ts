@@ -17,6 +17,7 @@ const axiosHandleLoginResponse = async <T>(
 ): Promise<IApiResponse<T>> => {
   if (response.status >= 200 && response.status < 300) {
     sessionStorage.setItem("token", response.data.token);
+    sessionStorage.setItem("role", response.data.role);
     window.location.href = "/main-menu"; // refresh and redirect to main page
     return {
       isError: false,
@@ -50,12 +51,11 @@ const axiosHandleRegisterResponse = async <T>(
   }
 };
 
-export const postLogin = async (login: string, password: string, role: string) => {
+export const postLogin = async (login: string, password: string) => {
   axios
     .post(login_url, {
       login: login,
       password: password,
-      role: role,
     })
     .then((r) => axiosHandleLoginResponse(r))
     .catch((r) => {
