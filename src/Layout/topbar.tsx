@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   createMuiTheme,
   createStyles,
@@ -15,7 +14,6 @@ import LocalParkingIcon from "@material-ui/icons/LocalParking";
 import { Link } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import WrenchIcon from "@material-ui/icons/BuildOutlined";
 import { postLogout } from "../Api/UserApi";
 import BookIcon from "@material-ui/icons/Book";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
@@ -61,12 +59,6 @@ export const HasUserRole = () => {
   return sessionStorage.role === "user" ? true : false;
 };
 
-interface ILoginHandlersProps {
-  handleLogInAsUser: () => void;
-  handleLogInAsTechnician: () => void;
-  userLoggedIn: boolean;
-}
-
 export const TopBar = () => {
   const classes = useStyles();
   const handleLogout = () => {
@@ -103,7 +95,7 @@ export const TopBar = () => {
                   </Button>
                 </div>
               </Toolbar>
-            ) : [!HasUserRole() ? (
+            ) : [HasUserRole() ? (
                   <Toolbar className={classes.toolbar}>
                     <div>
                       <IconButton

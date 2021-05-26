@@ -13,23 +13,8 @@ import { useStyles } from "./Styles/style";
 import { MainMenuPage } from "./Pages/mainPage";
 import { MalfunctionsListPage } from "./Pages/malfunctionsListPage";
 
-let userOpen: boolean = true;
-// const setLoginOpen = (open: boolean) => {
-//   userOpen = open;
-// }
 export default function App() {
   const classes = useStyles();
-  const [userLoginOpen, setUserLoginOpen] = useState<boolean>(true);
-  const handleLogInAsUser = () => {
-    console.log("set as true")
-    setUserLoginOpen(true);
-    userOpen=true;
-  };
-  const handleLogInAsTechnician = () => {
-    console.log("set as falsz")
-    setUserLoginOpen(false);
-    userOpen=false;
-  };
   return (
     <div className={classes.webpageStyle}>
       <Router>

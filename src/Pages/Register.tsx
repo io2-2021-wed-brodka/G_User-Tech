@@ -9,10 +9,6 @@ import Box from '@material-ui/core/Box';
 import { postLogin, postRegister } from '../Api/UserApi';
 import { useStyles } from '../Styles/style';
 
-interface ILoginModeProps {
-    userLoginOpen: boolean;
-}
-
 export const RegisterLoginPage = () =>{
     const classes = useStyles();
     const [loginOpen, setLoginOpen] = useState<boolean>(true);
