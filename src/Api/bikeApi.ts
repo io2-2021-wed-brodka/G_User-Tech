@@ -102,3 +102,13 @@ export const cancelReservation = async (bikeId: string) => {
       return err;
     });
 };
+
+export const blockBike = async (bikeId: string) => {
+  return axios
+    .post(`${BASE_URL}bikes/blocked/`, { id: bikeId }, getRequestConfig())
+    .then((r) => axiosHandleResponse(r))
+    .catch((err) => {
+      handleError(err);
+      return err;
+    });
+};

@@ -112,7 +112,7 @@ const RentedBikesListPage = () => {
                                                     startIcon={<DirectionsBikeIcon/>}
                                                     onClick={() => handleOpenReturnBikeDialog(index)}> RETURN
                                             </Button>
-                                            <Dialog disableBackdropClick open={isThisReturnBikeDialogOpened(index)} onClose={handleCloseReturnBikeDialog}>
+                                            <Dialog disableBackdropClick open={isThisReturnBikeDialogOpened(index)}>
                                                 <DialogTitle>Fill the form</DialogTitle>
                                                 <DialogContent>
                                                     <form className={classes.container}>
@@ -144,7 +144,7 @@ const RentedBikesListPage = () => {
                                                     startIcon={<ReportProblemIcon/>}
                                                     onClick={() => handleOpenReportMalfunctionDialog(index)}> REPORT MALFUNCTION
                                             </Button>
-                                            <Dialog disableBackdropClick open={isThisReportMalfunctionDialogOpened(index)} onClose={handleCloseReportMalfunctionDialog}>
+                                            <Dialog disableBackdropClick open={isThisReportMalfunctionDialogOpened(index)}>
                                                 <DialogTitle>Fill the form</DialogTitle>
                                                 <DialogContent>
                                                     <form className={classes.container}>

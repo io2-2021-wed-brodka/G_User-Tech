@@ -3,19 +3,24 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import '../App.css';
 import '../Layout/topbar.tsx';
 import List from '@material-ui/core/List';
-import {Button, DialogActions, DialogContent, DialogTitle,
+import {Button, DialogActions, DialogContent, DialogContentText, DialogTitle,
     ListItem, ListItemText, ListSubheader } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import {Malfunction, deleteMalfunction, getMalfunctions} from "../Api/malfunctionsApi";
+import { blockBike } from "../Api/bikeApi";
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import DescriptionIcon from '@material-ui/icons/Description';
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { themeWarning, useStyles } from "../Styles/style";
+import {prettify} from "../utils";
 
 export const MalfunctionsListPage = () => {
     const classes = useStyles();
     const [openedDeleteDialogIndex, setOpenedDeleteDialogIndex] = useState<number>(-1);
     const [openedDescriptionDialogIndex, setOpenedDescriptionDialogIndex] = useState<number>(-1);
+    const [openedBlockBikeDialogIndex, setOpenedBlockBikeDialogIndex] = useState<number>(-1);
+    
     const [malfunctionList, setMalfunctionList] = React.useState<Malfunction[]>([]);
     const [selectedIndex, setSelectedIndex] = React.useState<number>(-1);
     const [getMalfunctionsTrigger, setMalfunctionsTrigger] = React.useState(true);
@@ -39,6 +44,18 @@ export const MalfunctionsListPage = () => {
     const handleCloseMalfunctionDescriptionDialog = () => {
         setOpenedDescriptionDialogIndex(-1);
     };
+    const isThisBlockBikeDialogOpened = (dialogIndex: number) => {
+        return openedBlockBikeDialogIndex === dialogIndex ? true : false
+    };
+    const handleCloseBlockBikeDialog = () => {
+        setOpenedBlockBikeDialogIndex(-1);
+    };
+    const handleBlockBike = async () => {
+      await blockBike(malfunctionList[selectedIndex].bikeId);
+      setOpenedBlockBikeDialogIndex(-1);
+    //   setMalfunctionsTrigger(!getMalfunctionsTrigger);
+    };
+
     useEffect(() => {
         getMalfunctions().then(r => {
             if (r.isError) {
@@ -57,7 +74,7 @@ export const MalfunctionsListPage = () => {
                             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
                                  style={{width: '90%'}}>
                                 <Box p={1} m={1}>
-                                    Id
+                                    Bike ID
                                 </Box>
                             </Box>
                         </ListSubheader>
@@ -67,9 +84,9 @@ export const MalfunctionsListPage = () => {
                                     <ListItem className={classes.listItemStyle}
                                               onClick={() => handleMalfunctionListItemClick(index)}>
                                         <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-                                             style={{width: '80%'}}>
+                                             style={{width: '70%'}}>
                                             <Box p={2} m={1}>
-                                                <ListItemText primary={malfunction.id}/>
+                                                <ListItemText primary={prettify(malfunction.bikeId)}/>
                                             </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
@@ -77,14 +94,35 @@ export const MalfunctionsListPage = () => {
                                                     startIcon={<DescriptionIcon/>}
                                                     onClick={() => setOpenedDescriptionDialogIndex(index)}> DESCRIPTION
                                             </Button>
-                                            <Dialog disableBackdropClick open={isThisDescriptionDialogOpened(index)} onClose={handleCloseMalfunctionDescriptionDialog}>
+                                            <Dialog disableBackdropClick open={isThisDescriptionDialogOpened(index)}>
                                                 <DialogTitle>{"Malfunction report description:"}</DialogTitle>
                                                 <DialogContent>
                                                     {malfunction.description}
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button onClick={handleCloseMalfunctionDescriptionDialog}>
+                                                    <Button onClick={handleCloseMalfunctionDescriptionDialog} color="primary">
                                                         Close
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                        
+                                            <Button className={classes.blockButton}
+                                                    startIcon={<ErrorOutlineIcon/>}
+                                                    onClick={() => setOpenedBlockBikeDialogIndex(index)}> BLOCK
+                                            </Button>
+                                            <Dialog disableBackdropClick open={isThisBlockBikeDialogOpened(index)}>
+                                                <DialogTitle>{"Block this bike?"}</DialogTitle>
+                                                    <DialogContent>
+                                                        <DialogContentText>
+                                                            Do you really want to block this bike?
+                                                        </DialogContentText>
+                                                    </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={handleCloseBlockBikeDialog} color="primary">
+                                                        No
+                                                    </Button>
+                                                    <Button onClick={handleBlockBike} color="primary">
+                                                        Yes
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
@@ -93,7 +131,7 @@ export const MalfunctionsListPage = () => {
                                                     startIcon={<ReportProblemIcon/>}
                                                     onClick={() => setOpenedDeleteDialogIndex(index)}> DELETE REPORT
                                             </Button>
-                                            <Dialog disableBackdropClick open={isThisDeleteDialogOpened(index)} onClose={handleCloseDeleteMalfunctionDialog}>
+                                            <Dialog disableBackdropClick open={isThisDeleteDialogOpened(index)}>
                                                 <DialogTitle>{"Delete this malfunction report?"}</DialogTitle>
                                                 <DialogActions>
                                                     <Button onClick={handleCloseDeleteMalfunctionDialog}>
