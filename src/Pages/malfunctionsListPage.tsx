@@ -3,76 +3,42 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import '../App.css';
 import '../Layout/topbar.tsx';
 import List from '@material-ui/core/List';
-import {Button, DialogActions, DialogContent, DialogContentText, DialogTitle, InputLabel,
-    ListItem, ListItemText, ListSubheader, Input, TextField } from '@material-ui/core';
+import {Button, DialogActions, DialogContent, DialogTitle,
+    ListItem, ListItemText, ListSubheader } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import {Malfunction, reportMalfunction, deleteMalfunction, getMalfunctions} from "../Api/malfunctionsApi";
-import {getActiveStations, Station} from "../Api/StationApi";
-import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import {Malfunction, deleteMalfunction, getMalfunctions} from "../Api/malfunctionsApi";
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { themeWarning, useStyles } from "../Styles/style";
-import {prettify} from "../utils";
 
 export const MalfunctionsListPage = () => {
     const classes = useStyles();
-    const [openCreateBike, setOpenRentBike] = useState<boolean>(false);
-    const [openDeleteMalfunction, setOpenDeleteMalfunction] = useState<number>(-1);
-    const [openMalfunctionDescription, setOpenMalfunctionDescription] = useState<number>(-1);
-    const [chosenStationId, setChosenStationId] = React.useState<string>("");
+    const [openedDeleteDialogIndex, setOpenedDeleteDialogIndex] = useState<number>(-1);
+    const [openedDescriptionDialogIndex, setOpenedDescriptionDialogIndex] = useState<number>(-1);
     const [malfunctionList, setMalfunctionList] = React.useState<Malfunction[]>([]);
     const [selectedIndex, setSelectedIndex] = React.useState<number>(-1);
     const [getMalfunctionsTrigger, setMalfunctionsTrigger] = React.useState(true);
-    const [malfunctionDescription, setMalfunctionDescription] = React.useState("");
     const handleMalfunctionListItemClick = (index: number) => {
         setSelectedIndex(index);
     };
-    const handleOpenReturnBike = () => {
-        // setChosenStationId(stationList[0].id);
-        setOpenRentBike(true);
+    const isThisDeleteDialogOpened = (dialogIndex: number) => {
+        return openedDeleteDialogIndex === dialogIndex ? true : false
     };
-    const handleCloseReturnBike = () => {
-        setOpenRentBike(false);
+    const handleCloseDeleteMalfunctionDialog = () => {
+        setOpenedDeleteDialogIndex(-1);
     };
-    const handleReturnBike = async (bikeId: string) => {
-        // returnBike(bikeId, chosenStationId).then(r => {});
-        // setOpenRentBike(false);
-        // setBikesTrigger(!getBikesTrigger);
-    };
-    const handleOpenReportMalfunction = () => {
-        setMalfunctionDescription("");
-        // setOpenReportMalfunction(true);
-    };
-    const handleCloseReportMalfunction = () => {
-        // setOpenReportMalfunction(false);
-    };
-    const handleReportMalfunction = async (bikeId: string) => {
-        reportMalfunction(bikeId, malfunctionDescription);
-        // setOpenReportMalfunction(false);
-    };
-    const handleChangeMalfunctionDescription = (description: string) => {
-        setMalfunctionDescription(description);
-    }
-    const handleOpenDeleteMalfunction = (listElementIndex: number) => {
-        setOpenDeleteMalfunction(listElementIndex);
-    }
-    const handleCloseDeleteMalfunction = () => {
-        setOpenDeleteMalfunction(-1);
-    }
-    const deleteMalfunctionClicked = async () => {
+    const handleDeleteMalfunction = async () => {
       await deleteMalfunction(malfunctionList[selectedIndex].id);
-      setOpenDeleteMalfunction(-1);
+      setOpenedDeleteDialogIndex(-1);
       setMalfunctionsTrigger(!getMalfunctionsTrigger);
     };
-    const handleOpenMalfunctionDescription = (listElementIndex: number) => {
-        setOpenMalfunctionDescription(listElementIndex);
-    }
-    const handleCloseMalfunctionDescription = () => {
-        setOpenMalfunctionDescription(-1);
-    }
+    const isThisDescriptionDialogOpened = (dialogIndex: number) => {
+        return openedDescriptionDialogIndex === dialogIndex ? true : false
+    };
+    const handleCloseMalfunctionDescriptionDialog = () => {
+        setOpenedDescriptionDialogIndex(-1);
+    };
     useEffect(() => {
         getMalfunctions().then(r => {
             if (r.isError) {
@@ -109,15 +75,15 @@ export const MalfunctionsListPage = () => {
                                         <ThemeProvider theme={themeWarning}>
                                             <Button className={classes.malfunctionDescriptionButton} id="malfunction_description_button"
                                                     startIcon={<DescriptionIcon/>}
-                                                    onClick={() => handleOpenMalfunctionDescription(index)}> DESCRIPTION
+                                                    onClick={() => setOpenedDescriptionDialogIndex(index)}> DESCRIPTION
                                             </Button>
-                                            <Dialog disableBackdropClick open={openMalfunctionDescription === index ? true : false} onClose={handleCloseMalfunctionDescription}>
+                                            <Dialog disableBackdropClick open={isThisDescriptionDialogOpened(index)} onClose={handleCloseMalfunctionDescriptionDialog}>
                                                 <DialogTitle>{"Malfunction report description:"}</DialogTitle>
                                                 <DialogContent>
                                                     {malfunction.description}
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button onClick={handleCloseMalfunctionDescription}>
+                                                    <Button onClick={handleCloseMalfunctionDescriptionDialog}>
                                                         Close
                                                     </Button>
                                                 </DialogActions>
@@ -125,15 +91,15 @@ export const MalfunctionsListPage = () => {
                                         
                                             <Button className={classes.reportMalfunctionButton} id="delete_malfunction_button"
                                                     startIcon={<ReportProblemIcon/>}
-                                                    onClick={() => handleOpenDeleteMalfunction(index)}> DELETE REPORT
+                                                    onClick={() => setOpenedDeleteDialogIndex(index)}> DELETE REPORT
                                             </Button>
-                                            <Dialog disableBackdropClick open={openDeleteMalfunction === index ? true : false} onClose={handleCloseDeleteMalfunction}>
+                                            <Dialog disableBackdropClick open={isThisDeleteDialogOpened(index)} onClose={handleCloseDeleteMalfunctionDialog}>
                                                 <DialogTitle>{"Delete this malfunction report?"}</DialogTitle>
                                                 <DialogActions>
-                                                    <Button onClick={handleCloseDeleteMalfunction}>
+                                                    <Button onClick={handleCloseDeleteMalfunctionDialog}>
                                                         No
                                                     </Button>
-                                                    <Button onClick={deleteMalfunctionClicked} color="primary">
+                                                    <Button onClick={handleDeleteMalfunction} color="primary">
                                                         Yes
                                                     </Button>
                                                 </DialogActions>

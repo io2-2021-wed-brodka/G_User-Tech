@@ -19,8 +19,8 @@ import {prettify} from "../utils";
 
 const RentedBikesListPage = () => {
     const classes = useStyles();
-    const [openCreateBike, setOpenRentBike] = useState<boolean>(false);
-    const [openReportMalfunction, setOpenReportMalfunction] = useState<boolean>(false);
+    const [openedReturnBikeDialogIndex, setOpenedReturnBikeDialogIndex] = useState<number>(-1);
+    const [openedReportMalfunctionDialogIndex, setOpenedReportMalfunctionDialogIndex] = useState<number>(-1);
     const [chosenStationId, setChosenStationId] = React.useState<string>("");
     const [bikeList, setBikeList] = React.useState<Bike[]>([]);
     const [stationList, setStationList] = React.useState<Station[]>([]);
@@ -35,28 +35,34 @@ const RentedBikesListPage = () => {
     const handleChangeChosenStation = (event: React.ChangeEvent<{ value: unknown }>) => {
         setChosenStationId(String(event.target.value));
     };
-    const handleOpenReturnBike = () => {
+    const handleOpenReturnBikeDialog = (index: number) => {
         setChosenStationId(stationList[0].id);
-        setOpenRentBike(true);
+        setOpenedReturnBikeDialogIndex(index);
     };
-    const handleCloseReturnBike = () => {
-        setOpenRentBike(false);
+    const isThisReturnBikeDialogOpened = (dialogIndex: number) => {
+        return openedReturnBikeDialogIndex === dialogIndex ? true : false
     };
-    const handleReturnBike = async (bikeId: string) => {
-        returnBike(bikeId, chosenStationId).then(r => {});
-        setOpenRentBike(false);
+    const handleCloseReturnBikeDialog = () => {
+        setOpenedReturnBikeDialogIndex(-1);
+    };
+    const handleReturnBike = async () => {
+        await returnBike(bikeList[selectedIndex].id, chosenStationId);
+        setOpenedReturnBikeDialogIndex(-1);
         setBikesTrigger(!getBikesTrigger);
     };
-    const handleOpenReportMalfunction = () => {
+    const handleOpenReportMalfunctionDialog = (index: number) => {
         setMalfunctionDescription("");
-        setOpenReportMalfunction(true);
+        setOpenedReportMalfunctionDialogIndex(index);
     };
-    const handleCloseReportMalfunction = () => {
-        setOpenReportMalfunction(false);
+    const isThisReportMalfunctionDialogOpened = (dialogIndex: number) => {
+        return openedReportMalfunctionDialogIndex === dialogIndex ? true : false
     };
-    const handleReportMalfunction = async (bikeId: string) => {
-        reportMalfunction(bikeId, malfunctionDescription);
-        setOpenReportMalfunction(false);
+    const handleCloseReportMalfunctionDialog = () => {
+        setOpenedReportMalfunctionDialogIndex(-1);
+    };
+    const handleReportMalfunction = async () => {
+        reportMalfunction(bikeList[selectedIndex].id, malfunctionDescription);
+        setOpenedReportMalfunctionDialogIndex(-1);
     };
     const handleChangeMalfunctionDescription = (description: string) => {
         setMalfunctionDescription(description);
@@ -104,9 +110,9 @@ const RentedBikesListPage = () => {
                                         <ThemeProvider theme={themeWarning}>
                                             <Button className={classes.returnBikeButton} id="return_bike_button"
                                                     startIcon={<DirectionsBikeIcon/>}
-                                                    onClick={handleOpenReturnBike}> RETURN
+                                                    onClick={() => handleOpenReturnBikeDialog(index)}> RETURN
                                             </Button>
-                                            <Dialog disableBackdropClick open={openCreateBike} onClose={handleCloseReturnBike}>
+                                            <Dialog disableBackdropClick open={isThisReturnBikeDialogOpened(index)} onClose={handleCloseReturnBikeDialog}>
                                                 <DialogTitle>Fill the form</DialogTitle>
                                                 <DialogContent>
                                                     <form className={classes.container}>
@@ -126,19 +132,19 @@ const RentedBikesListPage = () => {
                                                     </form>
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button onClick={() => handleReturnBike(bike.id)} color="primary">
+                                                    <Button onClick={handleReturnBike} color="primary">
                                                         OK
                                                     </Button>
-                                                    <Button onClick={handleCloseReturnBike} color="primary">
+                                                    <Button onClick={handleCloseReturnBikeDialog} color="primary">
                                                         Cancel
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
                                             <Button className={classes.reportMalfunctionButton} id="report_malfunction_button"
                                                     startIcon={<ReportProblemIcon/>}
-                                                    onClick={handleOpenReportMalfunction}> REPORT MALFUNCTION
+                                                    onClick={() => handleOpenReportMalfunctionDialog(index)}> REPORT MALFUNCTION
                                             </Button>
-                                            <Dialog disableBackdropClick open={openReportMalfunction} onClose={handleCloseReportMalfunction}>
+                                            <Dialog disableBackdropClick open={isThisReportMalfunctionDialogOpened(index)} onClose={handleCloseReportMalfunctionDialog}>
                                                 <DialogTitle>Fill the form</DialogTitle>
                                                 <DialogContent>
                                                     <form className={classes.container}>
@@ -154,10 +160,10 @@ const RentedBikesListPage = () => {
                                                     </form>
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button onClick={() => handleReportMalfunction(bike.id)} color="primary">
+                                                    <Button onClick={handleReportMalfunction} color="primary">
                                                         Send
                                                     </Button>
-                                                    <Button onClick={handleCloseReportMalfunction} color="primary">
+                                                    <Button onClick={handleCloseReportMalfunctionDialog} color="primary">
                                                         Cancel
                                                     </Button>
                                                 </DialogActions>
