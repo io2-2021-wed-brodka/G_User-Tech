@@ -18,6 +18,7 @@ import { postLogout } from "../Api/UserApi";
 import BookIcon from "@material-ui/icons/Book";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import InboxIcon from "@material-ui/icons/HowToVote";
+import DirectionsBikeIcon from "@material-ui/icons/DirectionsBike";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -164,6 +165,16 @@ export const TopBar = () => {
                     >
                       <MenuIcon />
                     </IconButton>
+                    <Button
+                      color="inherit"
+                      startIcon={<DirectionsBikeIcon />}
+                      className={classes.title}
+                      component={Link}
+                      to="/bikes"
+                    >
+                      {" "}
+                      Bikes{" "}
+                    </Button>
                     <Button
                       color="inherit"
                       startIcon={<InboxIcon />}

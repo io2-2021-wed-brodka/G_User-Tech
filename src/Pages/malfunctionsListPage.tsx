@@ -20,7 +20,6 @@ export const MalfunctionsListPage = () => {
     const [openedDeleteDialogIndex, setOpenedDeleteDialogIndex] = useState<number>(-1);
     const [openedDescriptionDialogIndex, setOpenedDescriptionDialogIndex] = useState<number>(-1);
     const [openedBlockBikeDialogIndex, setOpenedBlockBikeDialogIndex] = useState<number>(-1);
-    
     const [malfunctionList, setMalfunctionList] = React.useState<Malfunction[]>([]);
     const [selectedIndex, setSelectedIndex] = React.useState<number>(-1);
     const [getMalfunctionsTrigger, setMalfunctionsTrigger] = React.useState(true);
@@ -53,7 +52,6 @@ export const MalfunctionsListPage = () => {
     const handleBlockBike = async () => {
       await blockBike(malfunctionList[selectedIndex].bikeId);
       setOpenedBlockBikeDialogIndex(-1);
-    //   setMalfunctionsTrigger(!getMalfunctionsTrigger);
     };
 
     useEffect(() => {
@@ -70,10 +68,10 @@ export const MalfunctionsListPage = () => {
             <List className={classes.ListStyle} subheader={<li/>}>
                 <li className={classes.listSection}>
                     <ul className={classes.ul}>
-                        <ListSubheader className={classes.listSubheader}>
-                            <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-                                 style={{width: '90%'}}>
-                                <Box p={1} m={1}>
+                        <ListSubheader className={classes.listSubheaderStyle}>
+                            <Box className={classes.listBox} 
+                                 style={{width: '50%'}}>
+                                <Box p={0} m={1}>
                                     Bike ID
                                 </Box>
                             </Box>
@@ -83,9 +81,8 @@ export const MalfunctionsListPage = () => {
                                 <li key={malfunction.id}>
                                     <ListItem className={classes.listItemStyle}
                                               onClick={() => handleMalfunctionListItemClick(index)}>
-                                        <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-                                             style={{width: '70%'}}>
-                                            <Box p={2} m={1}>
+                                        <Box className={classes.listBox} style={{width: '60%'}}>
+                                            <Box p={0} m={1}>
                                                 <ListItemText primary={prettify(malfunction.bikeId)}/>
                                             </Box>
                                         </Box>

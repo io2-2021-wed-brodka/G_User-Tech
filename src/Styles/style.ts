@@ -106,13 +106,12 @@ export const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#ff581a ',
             variant: 'contained',
             margin: '5px',
-            lineHeight: 1
+            lineHeight: 0.95
         },
         malfunctionDescriptionButton: {
             backgroundColor: '#2ca5b8 ',
             variant: 'contained',
             margin: '5px',
-            lineHeight: 1
         },
         listSubheader: {
             backgroundColor: '#4E4E50', 
@@ -120,6 +119,22 @@ export const useStyles = makeStyles((theme: Theme) =>
             fontWeight: 'bold',
             height: '50px', 
             borderRadius: '15px',
+        },
+        listSubheaderStyle: {
+          backgroundColor: "#4E4E50",
+          color: "white",
+          display: "flex",
+          height: "50px",
+          marginBottom: "5px",
+          marginTop: "5px",
+          borderRadius: "15px",
+        },
+        listBox: {
+          display: "flex",
+          flexDirection: "row",
+          padding: theme.spacing(1),
+          margin: theme.spacing(1),
+          alignSelf: "center",
         },
         listItemStyle: {
             backgroundColor: '#69696e',
