@@ -44,8 +44,11 @@ function StationListPage() {
               <Box className={classes.listBox}
                 style={{ width: "90%" }}
               >
-                <Box p={0} m={1}>
+                <Box p={0} m={1} style={{ width: "120px" }}>
                   Station name
+                </Box>
+                <Box p={0} m={1}>
+                  Bikes count
                 </Box>
               </Box>
             </ListSubheader>
@@ -59,8 +62,11 @@ function StationListPage() {
                     <Box className={classes.listBox}
                       style={{ width: "90%" }}
                     >
-                      <Box p={0} m={1}>
+                      <Box p={0} m={1} style={{ width: "150px" }}>
                         <ListItemText primary={station.name} />
+                      </Box>
+                      <Box p={0} m={1}>
+                        <ListItemText primary={station.activeBikesCount} />
                       </Box>
                     </Box>
                     <ThemeProvider theme={themeWarning}>

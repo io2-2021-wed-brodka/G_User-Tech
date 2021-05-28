@@ -19,6 +19,7 @@ export interface Station {
   id: string;
   state: StationState;
   name: string;
+  activeBikesCount: number;
   bikes: Bike[];
 }
 
