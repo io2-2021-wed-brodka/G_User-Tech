@@ -34,16 +34,14 @@ function StationListPage() {
   }, [getActiveStationsTrigger]);
   return (
     <div className={classes.generalContainer}>
+      <h1 className={classes.pageTitle}>
+          CHOOSE STATION
+      </h1>
       <List className={classes.ListStyle} subheader={<li />}>
         <li className={classes.listSection}>
           <ul className={classes.ul}>
-            <ListSubheader className={classes.listSubheader}>
-              <Box
-                display="flex"
-                flexDirection="row"
-                p={1}
-                m={1}
-                alignSelf="center"
+            <ListSubheader className={classes.listSubheaderStyle}>
+              <Box className={classes.listBox}
                 style={{ width: "90%" }}
               >
                 <Box p={0} m={1}>
@@ -58,12 +56,7 @@ function StationListPage() {
                     className={classes.listItemStyle}
                     onClick={() => handleListItemClick(index)}
                   >
-                    <Box
-                      display="flex"
-                      flexDirection="row"
-                      p={1}
-                      m={1}
-                      alignSelf="center"
+                    <Box className={classes.listBox}
                       style={{ width: "90%" }}
                     >
                       <Box p={0} m={1}>
@@ -72,8 +65,6 @@ function StationListPage() {
                     </Box>
                     <ThemeProvider theme={themeWarning}>
                       <Button
-                        variant="contained"
-                        color="primary"
                         className={classes.blockButton}
                         component={Link}
                         to={`${station.id}/bikes`}

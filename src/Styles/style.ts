@@ -118,13 +118,6 @@ export const useStyles = makeStyles((theme: Theme) =>
             variant: 'contained',
             margin: '5px',
         },
-        listSubheader: {
-            backgroundColor: '#4E4E50', 
-            display: 'flex', 
-            fontWeight: 'bold',
-            height: '50px', 
-            borderRadius: '15px',
-        },
         listSubheaderStyle: {
           backgroundColor: "#4E4E50",
           color: "white",
@@ -137,7 +130,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         listBox: {
           display: "flex",
           flexDirection: "row",
-          padding: theme.spacing(1),
+          padding: theme.spacing(0),
           margin: theme.spacing(1),
           alignSelf: "center",
         },
