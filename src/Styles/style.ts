@@ -2,6 +2,11 @@ import {createStyles, makeStyles, Theme, createMuiTheme} from '@material-ui/core
 import bicycleWallpaper from '../Resources/bikeWP.jpg';
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        pageTitle: {
+            alignSelf: "center", 
+            color: "white", 
+            textShadow: "0px 0px 5px black",
+        },
         ListStyle: {
             overflowY: 'auto',
             opacity: '0.92',

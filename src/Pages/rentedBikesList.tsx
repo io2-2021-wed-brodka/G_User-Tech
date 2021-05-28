@@ -85,14 +85,17 @@ const RentedBikesListPage = () => {
     }, [getBikesTrigger]);
     return (
         <div className={classes.generalContainer}>
+            <h1 className={classes.pageTitle}>
+                RENTED BIKES
+            </h1>
             <List className={classes.ListStyle} subheader={<li/>}>
                 <li className={classes.listSection}>
                     <ul className={classes.ul}>
-                        <ListSubheader className={classes.listSubheader}>
-                            <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
+                        <ListSubheader className={classes.listSubheaderStyle}>
+                            <Box className={classes.listBox}
                                  style={{width: '90%'}}>
-                                <Box p={1} m={1}>
-                                    Id
+                                <Box p={0} m={1}>
+                                    Bike ID
                                 </Box>
                             </Box>
                         </ListSubheader>
@@ -101,9 +104,9 @@ const RentedBikesListPage = () => {
                                 <li key={bike.id}>
                                     <ListItem className={classes.listItemStyle}
                                               onClick={() => handleBikeListItemClick(index)}>
-                                        <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-                                             style={{width: '90%'}}>
-                                            <Box p={2} m={1}>
+                                        <Box className={classes.listBox} 
+                                             style={{width: '80%'}}>
+                                            <Box p={0} m={1}>
                                                 <ListItemText primary={prettify(bike.id)}/>
                                             </Box>
                                         </Box>

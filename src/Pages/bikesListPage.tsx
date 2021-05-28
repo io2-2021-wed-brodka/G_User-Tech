@@ -58,7 +58,7 @@ export const BikesListPage = () => {
         if(!viewBlockedBikes)
             getActiveBikes().then((r) => {
                 setBikeList(r.bikes)
-        });
+            });
         else
             getBlockedBikes().then((r) => {
                 if (r.isError) {
@@ -70,12 +70,15 @@ export const BikesListPage = () => {
     }, [getBikesTrigger, viewBlockedBikes]);
   return (
     <div className={classes.generalContainer}>
+        <h1 className={classes.pageTitle}>
+            BIKES
+        </h1>
       <List className={classes.ListStyle} subheader={<li />}>
         <li className={classes.listSection}>
           <ul className={classes.ul}>
             <ListSubheader className={classes.listSubheaderStyle}>
                 <Box className={classes.listBox} style={{ width: "70%" }}>
-                    <Box p={0} m={1} style={{ marginRight: "12px" }}>
+                    <Box p={0} m={1} style={{width: "90px"}}>
                         Bike ID
                     </Box>
                     <Box p={0} m={1}>
@@ -98,10 +101,10 @@ export const BikesListPage = () => {
                     onClick={() => handleBikeListItemClick(index)}
                   >
                     <Box className={classes.listBox} style={{ width: "90%" }}>
-                        <Box p={0} m={1}>
+                        <Box p={0} m={1} style={{width: "90px"}}>
                             <ListItemText primary={prettify(bike.id)} />
                         </Box>
-                        <Box p={0} m={1} style={{ marginRight: "100px" }}>
+                        <Box p={0} m={1}>
                             <ListItemText primary={bike.station == null ? "" : bike.station.name} />
                         </Box>
                     </Box>

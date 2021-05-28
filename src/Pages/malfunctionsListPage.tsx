@@ -65,6 +65,9 @@ export const MalfunctionsListPage = () => {
     }, [getMalfunctionsTrigger]);
     return (
         <div className={classes.generalContainer}>
+            <h1 className={classes.pageTitle}>
+                MALFUNCTIONS
+            </h1>
             <List className={classes.ListStyle} subheader={<li/>}>
                 <li className={classes.listSection}>
                     <ul className={classes.ul}>
