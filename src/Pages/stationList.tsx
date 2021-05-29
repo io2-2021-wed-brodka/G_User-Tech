@@ -46,6 +46,9 @@ function StationListPage() {
                 alignSelf="center"
                 style={{ width: "90%" }}
               >
+                <Box p={0} m={1} style={{ marginRight: "30px" }}>
+                  Bikes Count
+                </Box>
                 <Box p={0} m={1}>
                   Station name
                 </Box>
@@ -66,6 +69,9 @@ function StationListPage() {
                       alignSelf="center"
                       style={{ width: "90%" }}
                     >
+                      <Box p={0} m={1} style={{ marginRight: "100px" }}>
+                        <ListItemText primary={station.activeBikesCount} />
+                      </Box>
                       <Box p={0} m={1}>
                         <ListItemText primary={station.name} />
                       </Box>
