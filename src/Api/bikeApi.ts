@@ -102,3 +102,52 @@ export const cancelReservation = async (bikeId: string) => {
       return err;
     });
 };
+
+export const getBikes = async (): Promise<IApiResponse<Bikes>> => {
+  return axios
+    .get(`${BASE_URL}bikes/`, getRequestConfig())
+    .then((r) => axiosHandleResponse(r))
+    .catch((err) => {
+      handleError(err);
+      return err;
+    });
+};
+
+export const getBlockedBikes = async (): Promise<IApiResponse<Bikes>> => {
+  return axios
+    .get(`${BASE_URL}bikes/blocked/`, getRequestConfig())
+    .then((r) => axiosHandleResponse(r))
+    .catch((err) => {
+      handleError(err);
+      return err;
+    });
+};
+
+export const getActiveBikes = async () => {
+  const allBikes: Bike[] = await getBikes().then(r => r.data?.bikes || []);
+  return {
+    bikes: allBikes.filter(bike => {
+      return bike.status.toString() === "available" ? true : false;
+    })
+  }
+};
+
+export const blockBike = async (bikeId: string) => {
+  return axios
+    .post(`${BASE_URL}bikes/blocked/`, { id: bikeId }, getRequestConfig())
+    .then((r) => axiosHandleResponse(r))
+    .catch((err) => {
+      handleError(err);
+      return err;
+    });
+};
+
+export const unblockBike = async (bikeId: string) => {
+  return axios
+    .delete(`${BASE_URL}bikes/blocked/${bikeId}/`, getRequestConfig())
+    .then((r) => axiosHandleResponse(r))
+    .catch((err) => {
+      handleError(err);
+      return err;
+    });
+};

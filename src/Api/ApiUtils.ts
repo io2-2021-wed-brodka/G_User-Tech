@@ -45,7 +45,7 @@ export const axiosHandleResponse = async <T>(
 export const handleError = async <T>(error: any): Promise<IApiResponse<T>> => {
   switch (error.response.status) {
     case 401:
-      alert("Your account was delated");
+      alert("Your account was deleted");
       window.location.href = "/login";
       break;
     default:

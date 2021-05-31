@@ -23,8 +23,8 @@ import { prettify } from "../utils";
 
 const BikeListPage = () => {
   const classes = useStyles();
-  const [openRentBike, setOpenRentBike] = useState<boolean>(false);
-  const [openReserveBike, setOpenReserveBike] = useState<boolean>(false);
+  const [openedRentBikeDialogIndex, setOpenedRentBikeDialogIndex] = useState<number>(-1);
+  const [openedReserveBikeDialogIndex, setOpenedReserveBikeDialogIndex] = useState<number>(-1);
   const [bikeList, setBikeList] = React.useState<Bike[]>([]);
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
   const [getBikesTrigger, setBikesTrigger] = React.useState(true);
@@ -32,21 +32,27 @@ const BikeListPage = () => {
     setSelectedIndex(index);
   };
   const handleCloseRentBike = () => {
-    setOpenRentBike(false);
+    setOpenedRentBikeDialogIndex(-1);
   };
   const handleCloseReserveBike = () => {
-    setOpenReserveBike(false);
+    setOpenedReserveBikeDialogIndex(-1);
   };
-  const rentBikeClicked = async () => {
+  const handleRentBike = async () => {
     await rentBike(bikeList[selectedIndex].id);
-    setOpenRentBike(false);
+    setOpenedRentBikeDialogIndex(-1);
     setBikesTrigger(!getBikesTrigger);
   };
-  const reserveBikeClicked = async () => {
+  const handleReserveBike = async () => {
     await reserveBike(bikeList[selectedIndex].id);
-    setOpenReserveBike(false);
+    setOpenedReserveBikeDialogIndex(-1);
     setBikesTrigger(!getBikesTrigger);
   };
+  const isThisRentBikeDialogOpened= (dialogIndex: number) => {
+    return openedRentBikeDialogIndex === dialogIndex ? true : false;
+  }
+  const isThisReserveBikeDialogOpened= (dialogIndex: number) => {
+    return openedReserveBikeDialogIndex === dialogIndex ? true : false;
+  }
   useEffect(() => {
     // TODO(tkarwowski): Is there a better way to do this?
     const url = window.location.href;
@@ -63,20 +69,18 @@ const BikeListPage = () => {
   }, [getBikesTrigger]);
   return (
     <div className={classes.generalContainer}>
+      <h1 className={classes.pageTitle}>
+          CHOOSE BIKE
+      </h1>
       <List className={classes.ListStyle} subheader={<li />}>
         <li className={classes.listSection}>
           <ul className={classes.ul}>
-            <ListSubheader className={classes.listSubheader}>
-              <Box
-                display="flex"
-                flexDirection="row"
-                p={1}
-                m={1}
-                alignSelf="center"
+            <ListSubheader className={classes.listSubheaderStyle}>
+              <Box className={classes.listBox}
                 style={{ width: "90%" }}
               >
-                <Box p={1} m={1}>
-                  Id
+                <Box p={0} m={1}>
+                  Bike ID
                 </Box>
               </Box>
             </ListSubheader>
@@ -87,15 +91,10 @@ const BikeListPage = () => {
                     className={classes.listItemStyle}
                     onClick={() => handleBikeListItemClick(index)}
                   >
-                    <Box
-                      display="flex"
-                      flexDirection="row"
-                      p={1}
-                      m={1}
-                      alignSelf="center"
+                    <Box className={classes.listBox}
                       style={{ width: "90%" }}
                     >
-                      <Box p={2} m={1}>
+                      <Box p={0} m={1}>
                         <ListItemText primary={prettify(bike.id)} />
                       </Box>
                     </Box>
@@ -104,21 +103,20 @@ const BikeListPage = () => {
                         id={`bike-rent-button-confirm-${index}`}
                         className={classes.rentButton}
                         startIcon={<DirectionsBikeIcon />}
-                        onClick={() => setOpenRentBike(true)}
+                        onClick={() => setOpenedRentBikeDialogIndex(index)}
                       >
                         RENT
                       </Button>
                       <Button
                         className={classes.reserveBikeButton}
                         startIcon={<HourglassEmptyIcon />}
-                        onClick={() => setOpenReserveBike(true)}
+                        onClick={() => setOpenedReserveBikeDialogIndex(index)}
                       >
                         RESERVE
                       </Button>
                       <Dialog
-                        open={openRentBike}
+                        open={isThisRentBikeDialogOpened(index)}
                         keepMounted
-                        onClose={handleCloseRentBike}
                       >
                         <DialogTitle>{"Rent this bike?"}</DialogTitle>
                         <DialogContent>
@@ -130,19 +128,14 @@ const BikeListPage = () => {
                           <Button onClick={handleCloseRentBike} color="primary">
                             No
                           </Button>
-                          <Button
-                            onClick={rentBikeClicked}
-                            color="primary"
-                            id="bike-rent-button-confirm"
-                          >
+                          <Button id="bike-rent-button-confirm" onClick={handleRentBike} color="primary">
                             Yes
                           </Button>
                         </DialogActions>
                       </Dialog>
                       <Dialog
-                        open={openReserveBike}
+                        open={isThisReserveBikeDialogOpened(index)}
                         keepMounted
-                        onClose={handleCloseReserveBike}
                       >
                         <DialogTitle>{"Reserve this bike?"}</DialogTitle>
                         <DialogContent>
@@ -157,7 +150,7 @@ const BikeListPage = () => {
                           >
                             No
                           </Button>
-                          <Button onClick={reserveBikeClicked} color="primary">
+                          <Button onClick={handleReserveBike} color="primary">
                             Yes
                           </Button>
                         </DialogActions>
