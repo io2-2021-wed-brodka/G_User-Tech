@@ -31,7 +31,7 @@ export const getBikesAtStation = async (
   stationId: string
 ): Promise<IApiResponse<Bikes>> => {
   return axios
-    .get(`${BASE_URL}stations/${stationId}/bikes/`, getRequestConfig())
+    .get(`${BASE_URL}stations/${stationId}/bikes`, getRequestConfig())
     .then((r) => axiosHandleResponse(r))
     .catch((err) => {
       handleError(err);
@@ -41,7 +41,7 @@ export const getBikesAtStation = async (
 
 export const rentBike = async (bikeId: string) => {
   return axios
-    .post(`${BASE_URL}bikes/rented/`, { id: bikeId }, getRequestConfig())
+    .post(`${BASE_URL}bikes/rented`, { id: bikeId }, getRequestConfig())
     .then((r) => axiosHandleResponse(r))
     .catch((err) => {
       handleError(err);
@@ -51,7 +51,7 @@ export const rentBike = async (bikeId: string) => {
 
 export const reserveBike = async (bikeId: string) => {
   return axios
-    .post(`${BASE_URL}bikes/reserved/`, { id: bikeId }, getRequestConfig())
+    .post(`${BASE_URL}bikes/reserved`, { id: bikeId }, getRequestConfig())
     .then((r) => axiosHandleResponse(r))
     .catch((err) => {
       handleError(err);
@@ -61,7 +61,7 @@ export const reserveBike = async (bikeId: string) => {
 
 export const getRentedBikes = async (): Promise<IApiResponse<Bikes>> => {
   return axios
-    .get(`${BASE_URL}bikes/rented/`, getRequestConfig())
+    .get(`${BASE_URL}bikes/rented`, getRequestConfig())
     .then((r) => axiosHandleResponse(r))
     .catch((err) => {
       handleError(err);
@@ -71,7 +71,7 @@ export const getRentedBikes = async (): Promise<IApiResponse<Bikes>> => {
 
 export const getReservedBikes = async (): Promise<IApiResponse<Bikes>> => {
   return axios
-    .get(`${BASE_URL}bikes/reserved/`, getRequestConfig())
+    .get(`${BASE_URL}bikes/reserved`, getRequestConfig())
     .then((r) => axiosHandleResponse(r))
     .catch((err) => {
       handleError(err);
@@ -82,7 +82,7 @@ export const getReservedBikes = async (): Promise<IApiResponse<Bikes>> => {
 export const returnBike = async (bikeId: string, stationId: string) => {
   return axios
     .post(
-      `${BASE_URL}stations/${stationId}/bikes/`,
+      `${BASE_URL}stations/${stationId}/bikes`,
       { id: bikeId },
       getRequestConfig()
     )
@@ -95,7 +95,7 @@ export const returnBike = async (bikeId: string, stationId: string) => {
 
 export const cancelReservation = async (bikeId: string) => {
   return axios
-    .delete(`${BASE_URL}bikes/reserved/${bikeId}/`, getRequestConfig())
+    .delete(`${BASE_URL}bikes/reserved/${bikeId}`, getRequestConfig())
     .then((r) => axiosHandleResponse(r))
     .catch((err) => {
       handleError(err);

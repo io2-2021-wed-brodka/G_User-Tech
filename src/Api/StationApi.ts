@@ -8,7 +8,7 @@ import {
 import { Bike } from "./bikeApi";
 import axios from "axios";
 
-const station_active_url = BASE_URL + "stations/active/";
+const station_active_url = BASE_URL + "stations/active";
 
 export enum StationState {
   Working,
