@@ -2,6 +2,11 @@ import {createStyles, makeStyles, Theme, createMuiTheme} from '@material-ui/core
 import bicycleWallpaper from '../Resources/bikeWP.jpg';
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        pageTitle: {
+            alignSelf: "center", 
+            color: "white", 
+            textShadow: "0px 0px 5px black",
+        },
         ListStyle: {
             overflowY: 'auto',
             opacity: '0.92',
@@ -102,12 +107,32 @@ export const useStyles = makeStyles((theme: Theme) =>
             variant: 'contained',
             margin: '5px'
         },
-        listSubheader: {
-            backgroundColor: '#4E4E50', 
-            display: 'flex', 
-            fontWeight: 'bold',
-            height: '50px', 
-            borderRadius: '15px',
+        reportMalfunctionButton: {
+            backgroundColor: '#ff581a ',
+            variant: 'contained',
+            margin: '5px',
+            lineHeight: 0.95
+        },
+        malfunctionDescriptionButton: {
+            backgroundColor: '#2ca5b8 ',
+            variant: 'contained',
+            margin: '5px',
+        },
+        listSubheaderStyle: {
+          backgroundColor: "#4E4E50",
+          color: "white",
+          display: "flex",
+          height: "50px",
+          marginBottom: "5px",
+          marginTop: "5px",
+          borderRadius: "15px",
+        },
+        listBox: {
+          display: "flex",
+          flexDirection: "row",
+          padding: theme.spacing(0),
+          margin: theme.spacing(1),
+          alignSelf: "center",
         },
         listItemStyle: {
             backgroundColor: '#69696e',

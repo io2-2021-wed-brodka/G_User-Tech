@@ -34,23 +34,21 @@ function StationListPage() {
   }, [getActiveStationsTrigger]);
   return (
     <div className={classes.generalContainer}>
+      <h1 className={classes.pageTitle}>
+          CHOOSE STATION
+      </h1>
       <List className={classes.ListStyle} subheader={<li />}>
         <li className={classes.listSection}>
           <ul className={classes.ul}>
-            <ListSubheader className={classes.listSubheader}>
-              <Box
-                display="flex"
-                flexDirection="row"
-                p={1}
-                m={1}
-                alignSelf="center"
+            <ListSubheader className={classes.listSubheaderStyle}>
+              <Box className={classes.listBox}
                 style={{ width: "90%" }}
               >
-                <Box p={0} m={1} style={{ marginRight: "30px" }}>
-                  Bikes Count
+                <Box p={0} m={1} style={{ width: "120px" }}>
+                  Station name
                 </Box>
                 <Box p={0} m={1}>
-                  Station name
+                  Bikes count
                 </Box>
               </Box>
             </ListSubheader>
@@ -61,25 +59,18 @@ function StationListPage() {
                     className={classes.listItemStyle}
                     onClick={() => handleListItemClick(index)}
                   >
-                    <Box
-                      display="flex"
-                      flexDirection="row"
-                      p={1}
-                      m={1}
-                      alignSelf="center"
+                    <Box className={classes.listBox}
                       style={{ width: "90%" }}
                     >
-                      <Box p={0} m={1} style={{ marginRight: "100px" }}>
-                        <ListItemText primary={station.activeBikesCount} />
+                      <Box p={0} m={1} style={{ width: "150px" }}>
+                        <ListItemText primary={station.name} />
                       </Box>
                       <Box p={0} m={1}>
-                        <ListItemText primary={station.name} />
+                        <ListItemText primary={station.activeBikesCount} />
                       </Box>
                     </Box>
                     <ThemeProvider theme={themeWarning}>
                       <Button
-                        variant="contained"
-                        color="primary"
                         className={classes.blockButton}
                         component={Link}
                         to={`${station.id}/bikes`}

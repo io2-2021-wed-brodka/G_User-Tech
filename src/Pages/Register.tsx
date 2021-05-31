@@ -51,7 +51,7 @@ export const RegisterLoginPage = () =>{
     return (
         <div className={classes.windowContainer}>
             <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-                                 >
+                                >
                 <Box p={1} m={1}>
                     {loginOpen ?
                         <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={loginOpen}   >
@@ -93,9 +93,9 @@ export const RegisterLoginPage = () =>{
                             <div className={classes.welcomeLabelSmall}>Don't have account yet?</div>
                             <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Sign up</Button>
                         </Container>           
-            }
+                    }
                 </Box>
-            </Box>  
+            </Box> 
         </div>
     )
 }
