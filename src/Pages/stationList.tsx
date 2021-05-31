@@ -72,7 +72,6 @@ function StationListPage() {
                     <ThemeProvider theme={themeWarning}>
                       <Button
                         id={`station-button-confirm-${index}`}
-                        color="primary"
                         className={classes.blockButton}
                         component={Link}
                         to={`${station.id}/bikes`}
