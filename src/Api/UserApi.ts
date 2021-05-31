@@ -8,9 +8,9 @@ import {
   IApiResponse,
 } from "./ApiUtils";
 
-const login_url = BASE_URL + "login/";
-const logout_url = BASE_URL + "logout/";
-const register_url = BASE_URL + "register/";
+const login_url = BASE_URL + "login";
+const logout_url = BASE_URL + "logout";
+const register_url = BASE_URL + "register";
 
 const axiosHandleLoginResponse = async <T>(
   response: AxiosResponse

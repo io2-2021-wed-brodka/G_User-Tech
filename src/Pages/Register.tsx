@@ -57,11 +57,11 @@ export const RegisterLoginPage = () =>{
                         <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={loginOpen}   >
                             <Container fixed className={classes.formContainerBlue} >
                                 <div className={classes.welcomeLabel}>Log in</div>
-                                <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
+                                <TextField id="login-login" label="Login" variant="filled" className={classes.textFieldStyle}
                                     onChange={(event: any) => handleChangeLoginLogin(event.target.value)} onKeyDown={onEnterDown}/>
-                                <TextField id="standard-password" label="Password" type="password" variant="filled" className={classes.textFieldStyle}
+                                <TextField id="login-password" label="Password" type="password" variant="filled" className={classes.textFieldStyle}
                                     onChange={(event: any) => handleChangePasswordLogin(event.target.value)} onKeyDown={onEnterDown}/>
-                                <Button variant="contained" style={{borderRadius: '15px'}} onClick={handleLogging}> Log in</Button>
+                                <Button id="login-button-confirm" variant="contained" style={{borderRadius: '15px'}} onClick={handleLogging}> Log in</Button>
                             </Container>
                         </Animated>              
                     :  
@@ -69,7 +69,7 @@ export const RegisterLoginPage = () =>{
                             <div className={classes.welcomeLabel}>Hello, Friend!</div>
                             <div className={classes.welcomeLabelSmall}>Enter your personal data and begin journey with us</div>
                             <div className={classes.welcomeLabelSmall}>Have account already?</div>
-                            <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Log in</Button>
+                            <Button id="login-button" variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Log in</Button>
                         </Container>                      
                     }
                 </Box>
@@ -78,12 +78,12 @@ export const RegisterLoginPage = () =>{
                         <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={signInOpen}>
                             <Container fixed className={classes.formContainerRed}>
                                 <div className={classes.welcomeLabel}>Sign up</div>
-                                <TextField id="standard-login" label="Login" variant="filled" className={classes.textFieldStyle}
+                                <TextField id="register-login" label="Login" variant="filled" className={classes.textFieldStyle}
                                     onChange={(event: any) => handleChangeLoginRegister(event.target.value)} onKeyDown={onEnterDown}/>
-                                <TextField id="standard-password" type="password" label="Password" variant="filled" className={classes.textFieldStyle}
+                                <TextField id="register-password" type="password" label="Password" variant="filled" className={classes.textFieldStyle}
                                     onChange={(event: any) => handleChangePasswordRegister(event.target.value)} onKeyDown={onEnterDown}/>
                                 {/* <TextField id="standard-password-confirm" label="Password Confirm" variant="filled" className={classes.textFieldStyle}/> */}
-                                <Button variant="contained" style={{borderRadius: '15px'}} onClick={() => {handleRegister(); handleOpen()} }> Sign up</Button>
+                                <Button id="register-button-confirm" variant="contained" style={{borderRadius: '15px'}} onClick={() => {handleRegister(); handleOpen()} }> Sign up</Button>
                             </Container>
                         </Animated>
                     :
@@ -91,7 +91,7 @@ export const RegisterLoginPage = () =>{
                             <div className={classes.welcomeLabel}>Welcome Back!</div>
                             <div className={classes.welcomeLabelSmall}>To keep conected with us please login with your personal data</div>
                             <div className={classes.welcomeLabelSmall}>Don't have account yet?</div>
-                            <Button variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Sign up</Button>
+                            <Button id="sign-up-container" variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Sign up</Button>
                         </Container>           
                     }
                 </Box>

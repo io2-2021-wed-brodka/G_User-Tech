@@ -19,7 +19,7 @@ import { Bike, getBikesAtStation, rentBike, reserveBike } from "../Api/bikeApi";
 import DirectionsBikeIcon from "@material-ui/icons/DirectionsBike";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import { themeWarning, useStyles } from "../Styles/style";
-import {prettify} from "../utils";
+import { prettify } from "../utils";
 
 const BikeListPage = () => {
   const classes = useStyles();
@@ -57,7 +57,7 @@ const BikeListPage = () => {
     // TODO(tkarwowski): Is there a better way to do this?
     const url = window.location.href;
     const stationId =
-      url.match(/http:\/\/localhost:3000\/stations\/(?<stationId>[^/]*)\/bikes/)
+      url.match(/http:\/\/localhost:3001\/stations\/(?<stationId>[^/]*)\/bikes/)
         ?.groups?.stationId || "";
     getBikesAtStation(stationId).then((r) => {
       if (r.isError) {
@@ -100,6 +100,7 @@ const BikeListPage = () => {
                     </Box>
                     <ThemeProvider theme={themeWarning}>
                       <Button
+                        id={`bike-rent-button-confirm-${index}`}
                         className={classes.rentButton}
                         startIcon={<DirectionsBikeIcon />}
                         onClick={() => setOpenedRentBikeDialogIndex(index)}
@@ -127,7 +128,7 @@ const BikeListPage = () => {
                           <Button onClick={handleCloseRentBike} color="primary">
                             No
                           </Button>
-                          <Button onClick={handleRentBike} color="primary">
+                          <Button id="bike-rent-button-confirm" onClick={handleRentBike} color="primary">
                             Yes
                           </Button>
                         </DialogActions>

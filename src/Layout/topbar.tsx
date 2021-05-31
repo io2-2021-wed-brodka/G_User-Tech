@@ -110,6 +110,7 @@ export const TopBar = () => {
                         <MenuIcon />
                       </IconButton>
                       <Button
+                        id="topbar-station-button-confirm"
                         color="inherit"
                         startIcon={<LocalParkingIcon />}
                         className={classes.title}
@@ -120,6 +121,7 @@ export const TopBar = () => {
                         Stations{" "}
                       </Button>
                       <Button
+                        id="topbar-rented-button-confirm"
                         color="inherit"
                         startIcon={<BookIcon />}
                         className={classes.title}
@@ -142,6 +144,7 @@ export const TopBar = () => {
                     </div>
                     <div>
                       <Button
+                        id="logout-button-confirm"
                         color="inherit"
                         startIcon={<ExitToAppIcon />}
                         className={classes.title}

@@ -15,7 +15,7 @@ import {getActiveStations, Station} from "../Api/StationApi";
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import { themeWarning, useStyles } from "../Styles/style";
-import {prettify} from "../utils";
+import { prettify } from "../utils";
 
 const RentedBikesListPage = () => {
     const classes = useStyles();
@@ -111,7 +111,8 @@ const RentedBikesListPage = () => {
                                             </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
-                                            <Button className={classes.returnBikeButton} id="return_bike_button"
+                                            <Button className={classes.returnBikeButton}
+                                                    id={`return-bike-button-${index}`}
                                                     startIcon={<DirectionsBikeIcon/>}
                                                     onClick={() => handleOpenReturnBikeDialog(index)}> RETURN
                                             </Button>
@@ -123,7 +124,9 @@ const RentedBikesListPage = () => {
                                                             <InputLabel htmlFor="demo-dialog-native">
                                                                 Station
                                                             </InputLabel>
-                                                            <Select native value={chosenStationId} onChange={handleChangeChosenStation}
+                                                            <Select native value={chosenStationId} 
+                                                                    id="select-return-bike-station" 
+                                                                    onChange={handleChangeChosenStation}
                                                                     input={<Input/>}>
                                                                 {stationList.map((station) => {
                                                                     return (
@@ -135,7 +138,9 @@ const RentedBikesListPage = () => {
                                                     </form>
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button onClick={handleReturnBike} color="primary">
+                                                    <Button id="dialog-return-bike-button-confirm"
+                                                            onClick={handleReturnBike} 
+                                                            color="primary">
                                                         OK
                                                     </Button>
                                                     <Button onClick={handleCloseReturnBikeDialog} color="primary">
@@ -171,7 +176,7 @@ const RentedBikesListPage = () => {
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
-                                        </ThemeProvider>
+                                            </ThemeProvider>
                                     </ListItem>
                                 </li>
                             );
