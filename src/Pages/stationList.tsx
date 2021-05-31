@@ -78,6 +78,7 @@ function StationListPage() {
                     </Box>
                     <ThemeProvider theme={themeWarning}>
                       <Button
+                        id={`station-button-confirm-${index}`}
                         variant="contained"
                         color="primary"
                         className={classes.blockButton}

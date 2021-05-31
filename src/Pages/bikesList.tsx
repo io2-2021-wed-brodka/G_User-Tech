@@ -19,7 +19,7 @@ import { Bike, getBikesAtStation, rentBike, reserveBike } from "../Api/bikeApi";
 import DirectionsBikeIcon from "@material-ui/icons/DirectionsBike";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import { themeWarning, useStyles } from "../Styles/style";
-import {prettify} from "../utils";
+import { prettify } from "../utils";
 
 const BikeListPage = () => {
   const classes = useStyles();
@@ -101,6 +101,7 @@ const BikeListPage = () => {
                     </Box>
                     <ThemeProvider theme={themeWarning}>
                       <Button
+                        id={`bike-rent-button-confirm-${index}`}
                         className={classes.rentButton}
                         startIcon={<DirectionsBikeIcon />}
                         onClick={() => setOpenRentBike(true)}
@@ -129,7 +130,11 @@ const BikeListPage = () => {
                           <Button onClick={handleCloseRentBike} color="primary">
                             No
                           </Button>
-                          <Button onClick={rentBikeClicked} color="primary">
+                          <Button
+                            onClick={rentBikeClicked}
+                            color="primary"
+                            id="bike-rent-button-confirm"
+                          >
                             Yes
                           </Button>
                         </DialogActions>
