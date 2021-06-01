@@ -10,14 +10,14 @@ import axios from "axios";
 
 const station_active_url = BASE_URL + "stations/active";
 
-export enum StationState {
-  Working,
+export enum StationStatus {
+  Active,
   Blocked,
 }
 
 export interface Station {
   id: string;
-  state: StationState;
+  status: StationStatus;
   name: string;
   activeBikesCount: number;
   bikes: Bike[];
