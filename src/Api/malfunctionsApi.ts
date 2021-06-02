@@ -4,7 +4,6 @@ import {
   axiosHandleResponse,
   getRequestConfig,
   handleError,
-  IApiResponse,
 } from "./ApiUtils";
 
 export interface Malfunction {
@@ -12,11 +11,11 @@ export interface Malfunction {
     bikeId: string,
     description: string,
     reportingUserId: string,
-};
+}
 
 export const reportMalfunction = async (bikeId: string, description: string) => {
     return axios
-      .post(`${BASE_URL}malfunctions/`, { id: bikeId, description: description}, getRequestConfig())
+      .post(`${BASE_URL}malfunctions`, { id: bikeId, description: description}, getRequestConfig())
       .then((r) => axiosHandleResponse(r))
       .catch((err) => {
         handleError(err);
@@ -36,7 +35,7 @@ export const reportMalfunction = async (bikeId: string, description: string) => 
 
     export const getMalfunctions = async () => {
         return axios
-          .get(`${BASE_URL}malfunctions/`, getRequestConfig())
+          .get(`${BASE_URL}malfunctions`, getRequestConfig())
           .then((r) => axiosHandleResponse(r))
           .catch((err) => {
             handleError(err);
