@@ -57,7 +57,7 @@ const BikeListPage = () => {
     // TODO(tkarwowski): Is there a better way to do this?
     const url = window.location.href;
     const stationId =
-      url.match(/http:\/\/localhost:3001\/stations\/(?<stationId>[^/]*)\/bikes/)
+      url.match(/.*?\/stations\/(?<stationId>[^/]*)\/bikes/)
         ?.groups?.stationId || "";
     getBikesAtStation(stationId).then((r) => {
       if (r.isError) {
