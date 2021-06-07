@@ -1,24 +1,24 @@
 import { BASE_URL } from "./urls";
 import axios from "axios";
 import { AxiosResponse } from "axios";
+import { store } from 'react-notifications-component';
 import {
   axiosHandleResponse,
   getRequestConfig,
   handleError,
   IApiResponse,
 } from "./ApiUtils";
+import { useHistory } from "react-router-dom";
 
-const login_url = BASE_URL + "login";
-const logout_url = BASE_URL + "logout";
-const register_url = BASE_URL + "register";
+const login_url = BASE_URL + "login/";
+const logout_url = BASE_URL + "logout/";
+const register_url = BASE_URL + "register/";
 
-const axiosHandleLoginResponse = async <T>(
+export const axiosHandleLoginResponse = async <T>(
   response: AxiosResponse
 ): Promise<IApiResponse<T>> => {
   if (response.status >= 200 && response.status < 300) {
     sessionStorage.setItem("token", response.data.token);
-    sessionStorage.setItem("role", response.data.role);
-    response.data.role === "user" ? window.location.href = "/main-menu" : window.location.href = "/"; // refresh and redirect to main page
     return {
       isError: false,
       responseCode: response.status,
@@ -33,10 +33,11 @@ const axiosHandleLoginResponse = async <T>(
   }
 };
 
-const axiosHandleRegisterResponse = async <T>(
+export const axiosHandleRegisterResponse = async <T>(
   response: AxiosResponse
 ): Promise<IApiResponse<T>> => {
   if (response.status >= 200 && response.status < 300) {
+    sessionStorage.setItem("token", response.data.token);
     return {
       isError: false,
       responseCode: response.status,
@@ -51,16 +52,16 @@ const axiosHandleRegisterResponse = async <T>(
   }
 };
 
-export const postLogin = async (login: string, password: string) => {
+export const postLogin = async (login: string, password: string, successCallback: any, errorCallback: any) => {
   axios
     .post(login_url, {
       login: login,
       password: password,
+      role: "user",
     })
-    .then((r) => axiosHandleLoginResponse(r))
+    .then((r) => {successCallback(r)})
     .catch((r) => {
-      if (r.response.status == 401) alert("Bad credentials");
-      else console.log("error");
+      errorCallback(r)
     });
 };
 
@@ -78,15 +79,14 @@ export const postLogout = async () => {
     });
 };
 
-export const postRegister = async (login: string, password: string) => {
+export const postRegister = async (login: string, password: string, successCallback: any, errorCallback: any) => {
   axios
     .post(register_url, {
       login: login,
       password: password,
     })
-    .then((r) => axiosHandleRegisterResponse(r))
+    .then((r) => {successCallback(r)})
     .catch((r) => {
-      if (r.response.status == 409) alert("Conflicting registration data");
-      else console.log("error");
+      errorCallback(r)
     });
 };

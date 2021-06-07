@@ -8,18 +8,17 @@ import {
 import { Bike } from "./bikeApi";
 import axios from "axios";
 
-const station_active_url = BASE_URL + "stations/active";
+const station_active_url = BASE_URL + "stations/active/";
 
-export enum StationStatus {
-  Active,
+export enum StationState {
+  Working,
   Blocked,
 }
 
 export interface Station {
   id: string;
-  status: StationStatus;
+  state: StationState;
   name: string;
-  activeBikesCount: number;
   bikes: Bike[];
 }
 

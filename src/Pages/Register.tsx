@@ -1,31 +1,42 @@
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import { createStyles, makeStyles,Theme} from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import {Animated} from "react-animated-css";
-import { useState} from "react";
-import 'animate.css';
-import Box from '@material-ui/core/Box';
-import { postLogin, postRegister } from '../Api/UserApi';
-import { useStyles } from '../Styles/style';
+import Container from '@material-ui/core/Container'
+import TextField from '@material-ui/core/TextField'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import { Animated } from 'react-animated-css'
+import { useState } from 'react'
+import 'animate.css'
+import Box from '@material-ui/core/Box'
+import {
+  axiosHandleLoginResponse,
+  axiosHandleRegisterResponse,
+  postLogin,
+  postRegister,
+} from '../Api/UserApi'
+import { useStyles } from '../Styles/style'
+import { store } from 'react-notifications-component'
+import { useHistory } from 'react-router-dom'
+import { AuthContext } from '../App'
+import React from 'react'
 
-export const RegisterLoginPage = () =>{
-    const classes = useStyles();
-    const [loginOpen, setLoginOpen] = useState<boolean>(true);
-    const [signInOpen, setSignInOpen] = useState<boolean>(false);
-    const [login, setLogin] = useState<string>("Login");
-    const [password, setPassword] = useState<string>("Password");
-    const handleOpen = () =>{
-        setLoginOpen(!loginOpen);
-        setSignInOpen(!signInOpen);
-    }    
-    const handleChangeLoginLogin = (login: string) => {
-        setLogin(login);
-    }
-    const handleChangePasswordLogin = (password: string) => {
-        setPassword(password);
-    }
-    const handleLogging = () => {
+export const RegisterLoginPage = () => {
+  const { setIsAuthentificated } = React.useContext(AuthContext)
+  const history = useHistory()
+  const classes = useStyles()
+  const [loginOpen, setLoginOpen] = useState<boolean>(true)
+  const [signInOpen, setSignInOpen] = useState<boolean>(false)
+  const [login, setLogin] = useState<string>('Login')
+  const [password, setPassword] = useState<string>('Password')
+  const handleOpen = () => {
+    setLoginOpen(!loginOpen)
+    setSignInOpen(!signInOpen)
+  }
+  const handleChangeLoginLogin = (login: string) => {
+    setLogin(login)
+  }
+  const handleChangePasswordLogin = (password: string) => {
+    setPassword(password)
+  }
+  const handleLogging = () => {
     try {
       postLogin(
         login,
@@ -78,13 +89,13 @@ export const RegisterLoginPage = () =>{
       )
     } catch {}
   }
-    const handleChangeLoginRegister = (login: string) => {
-        setLogin(login);
-    }
-    const handleChangePasswordRegister = (password: string) => {
-        setPassword(password);
-    }
-    const handleRegister = () => {
+  const handleChangeLoginRegister = (login: string) => {
+    setLogin(login)
+  }
+  const handleChangePasswordRegister = (password: string) => {
+    setPassword(password)
+  }
+  const handleRegister = () => {
     postRegister(
       login,
       password,
@@ -135,19 +146,17 @@ export const RegisterLoginPage = () =>{
       },
     )
   }
-    const onEnterDown = (event : any) => {
-        if(event.key == "Enter") {
-            event.preventDefault();
-            if (loginOpen) 
-                handleLogging() 
-            else {
-                handleRegister();
-                handleOpen(); // after register (succesful or not) switch to login page
-            }
-        }
+  const onEnterDown = (event: any) => {
+    if (event.key == 'Enter') {
+      event.preventDefault()
+      if (loginOpen) handleLogging()
+      else {
+        handleRegister()
+      }
     }
-    return (
-     <div className={classes.windowContainer}>
+  }
+  return (
+    <div className={classes.windowContainer}>
       <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center">
         <Box p={1} m={1}>
           {loginOpen ? (
@@ -248,6 +257,5 @@ export const RegisterLoginPage = () =>{
         </Box>
       </Box>
     </div>
-
-    )
+  )
 }
