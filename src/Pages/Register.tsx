@@ -26,8 +26,58 @@ export const RegisterLoginPage = () =>{
         setPassword(password);
     }
     const handleLogging = () => {
-        postLogin(login, password);
-    }
+    try {
+      postLogin(
+        login,
+        password,
+        async (r: any) => {
+          await axiosHandleLoginResponse(r).then(() => {
+            setIsAuthentificated(true)
+            history.push('/main-menu')
+            store.addNotification({
+              title: 'Successful login',
+              message: 'You have successfully logged into your account',
+              type: 'success', // 'default', 'success', 'info', 'warning'
+              container: 'top-left', // where to position the notifications
+              animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
+              animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
+              dismiss: {
+                duration: 3000,
+              },
+            })
+          })
+        },
+        (r: any) => {
+          if (r.response.status == 401) {
+            store.addNotification({
+              title: 'Bad credentials',
+              message: 'Try again',
+              type: 'danger', // 'default', 'success', 'info', 'warning'
+              container: 'top-left', // where to position the notifications
+              animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
+              animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
+              dismiss: {
+                duration: 3000,
+              },
+            })
+          } else {
+            console.log('error')
+            store.addNotification({
+              title: 'Unexpected error',
+              message: 'Try again',
+              type: 'danger', // 'default', 'success', 'info', 'warning'
+              container: 'top-left', // where to position the notifications
+              animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
+              animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
+              dismiss: {
+                duration: 3000,
+              },
+            })
+          }
+        },
+      )
+    } catch {}
+  }
     const handleChangeLoginRegister = (login: string) => {
         setLogin(login);
     }
@@ -35,8 +85,56 @@ export const RegisterLoginPage = () =>{
         setPassword(password);
     }
     const handleRegister = () => {
-        postRegister(login, password);
-    }
+    postRegister(
+      login,
+      password,
+      async (r: any) => {
+        await axiosHandleRegisterResponse(r).then(() => {
+          setIsAuthentificated(true)
+          history.push('/main-menu')
+          store.addNotification({
+            title: 'Successful registration',
+            message: 'You have successfully register into your account',
+            type: 'success', // 'default', 'success', 'info', 'warning'
+            container: 'top-left', // where to position the notifications
+            animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
+            animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
+            dismiss: {
+              duration: 3000,
+            },
+          })
+        })
+      },
+      (r: any) => {
+        handleOpen() // after not succesful register switch to login page
+        if (r.response.status == 409) {
+          store.addNotification({
+            title: 'Conflicting registration data',
+            message: 'Try again',
+            type: 'danger', // 'default', 'success', 'info', 'warning'
+            container: 'top-left', // where to position the notifications
+            animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
+            animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
+            dismiss: {
+              duration: 3000,
+            },
+          })
+        } else {
+          console.log('error')
+          store.addNotification({
+            title: 'Unexpected error',
+            type: 'danger', // 'default', 'success', 'info', 'warning'
+            container: 'top-left', // where to position the notifications
+            animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
+            animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
+            dismiss: {
+              duration: 3000,
+            },
+          })
+        }
+      },
+    )
+  }
     const onEnterDown = (event : any) => {
         if(event.key == "Enter") {
             event.preventDefault();
@@ -49,53 +147,107 @@ export const RegisterLoginPage = () =>{
         }
     }
     return (
-        <div className={classes.windowContainer}>
-            <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center"
-                                >
-                <Box p={1} m={1}>
-                    {loginOpen ?
-                        <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={loginOpen}   >
-                            <Container fixed className={classes.formContainerBlue} >
-                                <div className={classes.welcomeLabel}>Log in</div>
-                                <TextField id="login-login" label="Login" variant="filled" className={classes.textFieldStyle}
-                                    onChange={(event: any) => handleChangeLoginLogin(event.target.value)} onKeyDown={onEnterDown}/>
-                                <TextField id="login-password" label="Password" type="password" variant="filled" className={classes.textFieldStyle}
-                                    onChange={(event: any) => handleChangePasswordLogin(event.target.value)} onKeyDown={onEnterDown}/>
-                                <Button id="login-button-confirm" variant="contained" style={{borderRadius: '15px'}} onClick={handleLogging}> Log in</Button>
-                            </Container>
-                        </Animated>              
-                    :  
-                        <Container fixed className={classes.formContainerBlue}>
-                            <div className={classes.welcomeLabel}>Hello, Friend!</div>
-                            <div className={classes.welcomeLabelSmall}>Enter your personal data and begin journey with us</div>
-                            <div className={classes.welcomeLabelSmall}>Have account already?</div>
-                            <Button id="login-button" variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Log in</Button>
-                        </Container>                      
-                    }
-                </Box>
-                <Box p={1} m={1}>
-                    {signInOpen ?
-                        <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={signInOpen}>
-                            <Container fixed className={classes.formContainerRed}>
-                                <div className={classes.welcomeLabel}>Sign up</div>
-                                <TextField id="register-login" label="Login" variant="filled" className={classes.textFieldStyle}
-                                    onChange={(event: any) => handleChangeLoginRegister(event.target.value)} onKeyDown={onEnterDown}/>
-                                <TextField id="register-password" type="password" label="Password" variant="filled" className={classes.textFieldStyle}
-                                    onChange={(event: any) => handleChangePasswordRegister(event.target.value)} onKeyDown={onEnterDown}/>
-                                {/* <TextField id="standard-password-confirm" label="Password Confirm" variant="filled" className={classes.textFieldStyle}/> */}
-                                <Button id="register-button-confirm" variant="contained" style={{borderRadius: '15px'}} onClick={() => {handleRegister(); handleOpen()} }> Sign up</Button>
-                            </Container>
-                        </Animated>
-                    :
-                        <Container fixed className={classes.formContainerRed}>
-                            <div className={classes.welcomeLabel}>Welcome Back!</div>
-                            <div className={classes.welcomeLabelSmall}>To keep conected with us please login with your personal data</div>
-                            <div className={classes.welcomeLabelSmall}>Don't have account yet?</div>
-                            <Button id="sign-up-container" variant="outlined" onClick={() => handleOpen()} style={{borderRadius: '15px'}}>Sign up</Button>
-                        </Container>           
-                    }
-                </Box>
-            </Box> 
-        </div>
+     <div className={classes.windowContainer}>
+      <Box display="flex" flexDirection="row" p={1} m={1} alignSelf="center">
+        <Box p={1} m={1}>
+          {loginOpen ? (
+            <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={loginOpen}>
+              <Container fixed className={classes.formContainerBlue}>
+                <div className={classes.welcomeLabel}>Log in</div>
+                <TextField
+                  id="standard-login"
+                  label="Login"
+                  variant="filled"
+                  className={classes.textFieldStyle}
+                  onChange={(event: any) => handleChangeLoginLogin(event.target.value)}
+                  onKeyDown={onEnterDown}
+                />
+                <TextField
+                  id="standard-password"
+                  label="Password"
+                  type="password"
+                  variant="filled"
+                  className={classes.textFieldStyle}
+                  onChange={(event: any) => handleChangePasswordLogin(event.target.value)}
+                  onKeyDown={onEnterDown}
+                />
+                <Button
+                  variant="contained"
+                  style={{ borderRadius: '15px' }}
+                  onClick={handleLogging}>
+                  {' '}
+                  Log in
+                </Button>
+              </Container>
+            </Animated>
+          ) : (
+            <Container fixed className={classes.formContainerBlue}>
+              <div className={classes.welcomeLabel}>Hello, Friend!</div>
+              <div className={classes.welcomeLabelSmall}>
+                Enter your personal data and begin journey with us
+              </div>
+              <div className={classes.welcomeLabelSmall}>Have account already?</div>
+              <Button
+                variant="outlined"
+                onClick={() => handleOpen()}
+                style={{ borderRadius: '15px' }}>
+                Log in
+              </Button>
+            </Container>
+          )}
+        </Box>
+        <Box p={1} m={1}>
+          {signInOpen ? (
+            <Animated animationIn="zoomIn" animationOut="zoomOut" isVisible={signInOpen}>
+              <Container fixed className={classes.formContainerRed}>
+                <div className={classes.welcomeLabel}>Sign up</div>
+                <TextField
+                  id="standard-login"
+                  label="Login"
+                  variant="filled"
+                  className={classes.textFieldStyle}
+                  onChange={(event: any) => handleChangeLoginRegister(event.target.value)}
+                  onKeyDown={onEnterDown}
+                />
+                <TextField
+                  id="standard-password"
+                  type="password"
+                  label="Password"
+                  variant="filled"
+                  className={classes.textFieldStyle}
+                  onChange={(event: any) => handleChangePasswordRegister(event.target.value)}
+                  onKeyDown={onEnterDown}
+                />
+                {/* <TextField id="standard-password-confirm" label="Password Confirm" variant="filled" className={classes.textFieldStyle}/> */}
+                <Button
+                  variant="contained"
+                  style={{ borderRadius: '15px' }}
+                  onClick={() => {
+                    handleRegister()
+                  }}>
+                  {' '}
+                  Sign up
+                </Button>
+              </Container>
+            </Animated>
+          ) : (
+            <Container fixed className={classes.formContainerRed}>
+              <div className={classes.welcomeLabel}>Welcome Back!</div>
+              <div className={classes.welcomeLabelSmall}>
+                To keep conected with us please login with your personal data
+              </div>
+              <div className={classes.welcomeLabelSmall}>Don't have account yet?</div>
+              <Button
+                variant="outlined"
+                onClick={() => handleOpen()}
+                style={{ borderRadius: '15px' }}>
+                Sign up
+              </Button>
+            </Container>
+          )}
+        </Box>
+      </Box>
+    </div>
+
     )
 }
