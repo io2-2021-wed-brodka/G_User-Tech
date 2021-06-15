@@ -87,6 +87,7 @@ export const BikesListPage = () => {
                 </Box>
                 <Box>
                     <Switch
+                        id={`bikes-switch-blocked`}
                         checked={viewBlockedBikes}
                         onChange={() => setViewBlockedBikes(!viewBlockedBikes)}
                         edge="start"
@@ -111,7 +112,7 @@ export const BikesListPage = () => {
                     <ThemeProvider theme={themeWarning}>
                         {!viewBlockedBikes ? (
                             <React.Fragment>
-                                <Button className={classes.blockButton}
+                                <Button id={`bikes-block-{index}`} className={classes.blockButton}
                                     startIcon={<ErrorOutlineIcon/>}
                                     onClick={() => setOpenedBlockBikeDialogIndex(index)}> BLOCK
                                 </Button>

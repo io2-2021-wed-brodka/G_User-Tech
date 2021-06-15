@@ -73,6 +73,7 @@ export const TopBar = () => {
               <Toolbar className={classes.toolbar}>
                 <div>
                   <IconButton
+                    id="topbar-none"
                     edge="start"
                     className={classes.menuButton}
                     color="inherit"
@@ -85,6 +86,7 @@ export const TopBar = () => {
                 </div>
                 <div>
                   <Button
+                    id="topbar-login"
                     color="inherit"
                     startIcon={<PersonOutlineIcon />}
                     className={classes.title}
@@ -133,6 +135,7 @@ export const TopBar = () => {
                       </Button>
                       <Button
                         color="inherit"
+                        id="topbar-reserved"
                         startIcon={<HourglassEmptyIcon />}
                         className={classes.title}
                         component={Link}
@@ -170,6 +173,7 @@ export const TopBar = () => {
                     </IconButton>
                     <Button
                       color="inherit"
+                      id="topbar-bikes"
                       startIcon={<DirectionsBikeIcon />}
                       className={classes.title}
                       component={Link}
@@ -180,6 +184,7 @@ export const TopBar = () => {
                     </Button>
                     <Button
                       color="inherit"
+                      id="topbar-malfunctions"
                       startIcon={<InboxIcon />}
                       className={classes.title}
                       component={Link}
@@ -192,6 +197,7 @@ export const TopBar = () => {
                   <div>
                     <Button
                       color="inherit"
+                      id="logout-button-confirm"
                       startIcon={<ExitToAppIcon />}
                       className={classes.title}
                       onClick={handleLogout}
