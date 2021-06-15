@@ -18,7 +18,8 @@ const axiosHandleLoginResponse = async <T>(
   if (response.status >= 200 && response.status < 300) {
     sessionStorage.setItem("token", response.data.token);
     sessionStorage.setItem("role", response.data.role);
-    response.data.role === "user" ? window.location.href = "/main-menu" : window.location.href = "/"; // refresh and redirect to main page
+    // TODO(tkarwowski): redirects break static page setup (this breaks in cloud)
+    // response.data.role === "user" ? window.location.href = "/main-menu" : window.location.href = "/"; // refresh and redirect to main page
     return {
       isError: false,
       responseCode: response.status,
