@@ -47,6 +47,17 @@ export const useStyles = makeStyles((theme: Theme) =>
       variant: "contained",
       margin: "5px",
     },
+    fixedButton: {
+      backgroundColor: '#38E892',
+      variant: 'contained',
+      margin: '5px'
+    },
+    disabledButton: {
+      backgroundColor: '#5a5a5a',
+      variant: 'contained',
+      margin: '5px',
+      lineHeight: 0.95
+    },
     cancelReservationButton: {
       backgroundColor: "#D11A2A ",
       variant: "contained",

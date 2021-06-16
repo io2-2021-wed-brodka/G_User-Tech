@@ -50,19 +50,22 @@ const RentedBikesListPage = () => {
         setOpenedReturnBikeDialogIndex(-1);
         setBikesTrigger(!getBikesTrigger);
     };
-    const handleOpenReportMalfunctionDialog = (index: number) => {
+    const handleOpenReturnBikeReportMalfunctionDialog = (index: number) => {
+        setChosenStationId(stationList[0].id);
         setMalfunctionDescription("");
         setOpenedReportMalfunctionDialogIndex(index);
     };
-    const isThisReportMalfunctionDialogOpened = (dialogIndex: number) => {
+    const isThisReturnBikeReportMalfunctionDialogOpened = (dialogIndex: number) => {
         return openedReportMalfunctionDialogIndex === dialogIndex ? true : false
     };
-    const handleCloseReportMalfunctionDialog = () => {
+    const handleCloseReturnBikeReportMalfunctionDialog = () => {
         setOpenedReportMalfunctionDialogIndex(-1);
     };
-    const handleReportMalfunction = async () => {
-        reportMalfunction(bikeList[selectedIndex].id, malfunctionDescription);
+    const handleReturnBikeReportMalfunction = async () => {
+        await reportMalfunction(bikeList[selectedIndex].id, malfunctionDescription);
+        await returnBike(bikeList[selectedIndex].id, chosenStationId);
         setOpenedReportMalfunctionDialogIndex(-1);
+        setBikesTrigger(!getBikesTrigger);
     };
     const handleChangeMalfunctionDescription = (description: string) => {
         setMalfunctionDescription(description);
@@ -117,7 +120,7 @@ const RentedBikesListPage = () => {
                                                     onClick={() => handleOpenReturnBikeDialog(index)}> RETURN
                                             </Button>
                                             <Dialog disableBackdropClick open={isThisReturnBikeDialogOpened(index)}>
-                                                <DialogTitle>Fill the form</DialogTitle>
+                                                <DialogTitle>Return bike to station</DialogTitle>
                                                 <DialogContent>
                                                     <form className={classes.container}>
                                                         <FormControl className={classes.formControl}>
@@ -148,30 +151,44 @@ const RentedBikesListPage = () => {
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
-                                            <Button id={`bike-create-malfunction-${index}`} className={classes.reportMalfunctionButton} id="report_malfunction_button"
-                                                    startIcon={<ReportProblemIcon/>}
-                                                    onClick={() => handleOpenReportMalfunctionDialog(index)}> REPORT MALFUNCTION
+                                            <Button id={`bike-create-malfunction-${index}`} className={classes.reportMalfunctionButton}
+                                                    startIcon={<DirectionsBikeIcon/>}
+                                                    onClick={() => handleOpenReturnBikeReportMalfunctionDialog(index)}> RETURN & REPORT MALFUNCTION
                                             </Button>
-                                            <Dialog disableBackdropClick open={isThisReportMalfunctionDialogOpened(index)}>
-                                                <DialogTitle>Fill the form</DialogTitle>
+                                            <Dialog disableBackdropClick open={isThisReturnBikeReportMalfunctionDialogOpened(index)}>
+                                                <DialogTitle>Return bike to station</DialogTitle>
                                                 <DialogContent>
                                                     <form className={classes.container}>
                                                         <FormControl className={classes.formControl}>
-                                                        <label>Enter malfunction description: </label>
-                                                        <TextField id={`bike-create-malfunction-desc`}
-                                                            multiline
-                                                            rows={10}
-                                                            variant="outlined"
-                                                            onChange={(event: any) => handleChangeMalfunctionDescription(event.target.value)}
-                                                        />
+                                                            <label>Enter malfunction description: </label>
+                                                            <TextField id={`bike-create-malfunction-desc`}
+                                                                multiline
+                                                                rows={10}
+                                                                variant="outlined"
+                                                                onChange={(event: any) => handleChangeMalfunctionDescription(event.target.value)}
+                                                            />
+                                                            <br></br>
+                                                            <label>
+                                                                Station
+                                                            </label>
+                                                            <Select native value={chosenStationId} 
+                                                                    id="select-return-bike-station" 
+                                                                    onChange={handleChangeChosenStation}
+                                                                    input={<Input/>}>
+                                                                {stationList.map((station) => {
+                                                                    return (
+                                                                        <option value={station.id}> {station.name} </option>
+                                                                    )
+                                                                })}
+                                                            </Select>
                                                         </FormControl>
                                                     </form>
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button  id={`bike-create-malfunction-confirm`} onClick={handleReportMalfunction} color="primary">
-                                                        Send
+                                                    <Button  id={`bike-create-malfunction-confirm`} onClick={handleReturnBikeReportMalfunction} color="primary">
+                                                        Return and Send
                                                     </Button>
-                                                    <Button onClick={handleCloseReportMalfunctionDialog} color="primary">
+                                                    <Button onClick={handleCloseReturnBikeReportMalfunctionDialog} color="primary">
                                                         Cancel
                                                     </Button>
                                                 </DialogActions>
