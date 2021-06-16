@@ -148,7 +148,7 @@ const RentedBikesListPage = () => {
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
-                                            <Button className={classes.reportMalfunctionButton} id="report_malfunction_button"
+                                            <Button id={`bike-create-malfunction-${index}`} className={classes.reportMalfunctionButton} id="report_malfunction_button"
                                                     startIcon={<ReportProblemIcon/>}
                                                     onClick={() => handleOpenReportMalfunctionDialog(index)}> REPORT MALFUNCTION
                                             </Button>
@@ -158,7 +158,7 @@ const RentedBikesListPage = () => {
                                                     <form className={classes.container}>
                                                         <FormControl className={classes.formControl}>
                                                         <label>Enter malfunction description: </label>
-                                                        <TextField
+                                                        <TextField id={`bike-create-malfunction-desc`}
                                                             multiline
                                                             rows={10}
                                                             variant="outlined"
@@ -168,7 +168,7 @@ const RentedBikesListPage = () => {
                                                     </form>
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button onClick={handleReportMalfunction} color="primary">
+                                                    <Button  id={`bike-create-malfunction-confirm`} onClick={handleReportMalfunction} color="primary">
                                                         Send
                                                     </Button>
                                                     <Button onClick={handleCloseReportMalfunctionDialog} color="primary">
