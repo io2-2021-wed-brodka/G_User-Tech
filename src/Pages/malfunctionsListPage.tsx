@@ -219,28 +219,7 @@ export const MalfunctionsListPage = () => {
                     </React.Fragment>
                     );
                 break;
-                break;
-
         }
-        // return (
-        //     <React.Fragment>
-        //     <Button className={classes.malfunctionDescriptionButton} id="malfunction_description_button"
-        //             startIcon={<DescriptionIcon/>}
-        //             onClick={() => setOpenedDescriptionDialogIndex(index)}> DESCRIPTION
-        //     </Button>
-        //     <Dialog disableBackdropClick open={isThisDescriptionDialogOpened(index)}>
-        //         <DialogTitle>{"Malfunction report description:"}</DialogTitle>
-        //         <DialogContent>
-        //             {malfunction.description}
-        //         </DialogContent>
-        //         <DialogActions>
-        //             <Button onClick={handleCloseMalfunctionDescriptionDialog} color="primary">
-        //                 Close
-        //             </Button>
-        //         </DialogActions>
-        //     </Dialog>
-        //     </React.Fragment>
-        // );
     };
     return (
         <div className={classes.generalContainer}>
@@ -270,65 +249,6 @@ export const MalfunctionsListPage = () => {
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
                                             {renderButtons(malfunction, index)}
-                                            {/* {!XD ? (
-                                                <React.Fragment>
-
-                                                </React.Fragment>
-                                            ) : (
-
-                                            )}
-                                            <Button className={classes.malfunctionDescriptionButton} id="malfunction_description_button"
-                                                    startIcon={<DescriptionIcon/>}
-                                                    onClick={() => setOpenedDescriptionDialogIndex(index)}> DESCRIPTION
-                                            </Button>
-                                            <Dialog disableBackdropClick open={isThisDescriptionDialogOpened(index)}>
-                                                <DialogTitle>{"Malfunction report description:"}</DialogTitle>
-                                                <DialogContent>
-                                                    {malfunction.description}
-                                                </DialogContent>
-                                                <DialogActions>
-                                                    <Button onClick={handleCloseMalfunctionDescriptionDialog} color="primary">
-                                                        Close
-                                                    </Button>
-                                                </DialogActions>
-                                            </Dialog>
-                                        
-                                            <Button className={classes.blockButton}
-                                                    startIcon={<ErrorOutlineIcon/>}
-                                                    onClick={() => setOpenedBlockBikeDialogIndex(index)}> APPROVE
-                                            </Button>
-                                            <Dialog disableBackdropClick open={isThisBlockBikeDialogOpened(index)}>
-                                                <DialogTitle>{"Block this bike?"}</DialogTitle>
-                                                    <DialogContent>
-                                                        <DialogContentText>
-                                                            Do you really want to block this bike?
-                                                        </DialogContentText>
-                                                    </DialogContent>
-                                                <DialogActions>
-                                                    <Button onClick={handleCloseBlockBikeDialog} color="primary">
-                                                        No
-                                                    </Button>
-                                                    <Button onClick={handleBlockBike} color="primary">
-                                                        Yes
-                                                    </Button>
-                                                </DialogActions>
-                                            </Dialog>
-                                        
-                                            <Button className={classes.reportMalfunctionButton} id="delete_malfunction_button"
-                                                    startIcon={<ReportProblemIcon/>}
-                                                    onClick={() => setOpenedDeleteDialogIndex(index)}> DENY
-                                            </Button>
-                                            <Dialog disableBackdropClick open={isThisDeleteDialogOpened(index)}>
-                                                <DialogTitle>{"Delete this malfunction report?"}</DialogTitle>
-                                                <DialogActions>
-                                                    <Button onClick={handleCloseDeleteMalfunctionDialog}>
-                                                        No
-                                                    </Button>
-                                                    <Button onClick={handleDeleteMalfunction} color="primary">
-                                                        Yes
-                                                    </Button>
-                                                </DialogActions>
-                                            </Dialog> */}
                                         </ThemeProvider>
                                     </ListItem>
                                 </li>

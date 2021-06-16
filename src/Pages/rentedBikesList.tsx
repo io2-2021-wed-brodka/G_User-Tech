@@ -151,7 +151,7 @@ const RentedBikesListPage = () => {
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
-                                            <Button id={`bike-create-malfunction-${index}`} className={classes.reportMalfunctionButton} id="report_malfunction_button"
+                                            <Button id={`bike-create-malfunction-${index}`} className={classes.reportMalfunctionButton}
                                                     startIcon={<DirectionsBikeIcon/>}
                                                     onClick={() => handleOpenReturnBikeReportMalfunctionDialog(index)}> RETURN & REPORT MALFUNCTION
                                             </Button>
@@ -186,7 +186,7 @@ const RentedBikesListPage = () => {
                                                 </DialogContent>
                                                 <DialogActions>
                                                     <Button  id={`bike-create-malfunction-confirm`} onClick={handleReturnBikeReportMalfunction} color="primary">
-                                                        Send
+                                                        Return and Send
                                                     </Button>
                                                     <Button onClick={handleCloseReturnBikeReportMalfunctionDialog} color="primary">
                                                         Cancel
