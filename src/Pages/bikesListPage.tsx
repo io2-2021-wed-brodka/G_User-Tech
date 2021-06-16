@@ -127,7 +127,7 @@ export const BikesListPage = () => {
                                         <Button onClick={handleCloseBlockBikeDialog} color="primary">
                                             No
                                         </Button>
-                                        <Button onClick={handleBlockBike} color="primary">
+                                        <Button id={`bikes-block-confirm`} onClick={handleBlockBike} color="primary">
                                             Yes
                                         </Button>
                                     </DialogActions>
@@ -135,7 +135,7 @@ export const BikesListPage = () => {
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
-                                <Button className={classes.blockButton}
+                                <Button id={`bikes-unblock-{index}`} className={classes.blockButton}
                                     startIcon={<ErrorOutlineIcon/>}
                                     onClick={() => setOpenedUnblockBikeDialogIndex(index)}> UNBLOCK
                                 </Button>
@@ -150,7 +150,7 @@ export const BikesListPage = () => {
                                         <Button onClick={handleCloseUnblockBikeDialog} color="primary">
                                             No
                                         </Button>
-                                        <Button onClick={handleUnblockBike} color="primary">
+                                        <Button id={`bikes-block-confirm`} onClick={handleUnblockBike} color="primary">
                                             Yes
                                         </Button>
                                     </DialogActions>

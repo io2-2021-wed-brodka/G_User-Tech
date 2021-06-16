@@ -98,11 +98,11 @@ const ReservedBikesListPage = () => {
                                             </Box>
                                         </Box>
                                         <ThemeProvider theme={themeWarning}>
-                                            <Button className={classes.cancelReservationButton} id="cancel_reservation_button"
+                                            <Button className={classes.cancelReservationButton} id={`cancel-reservation-${index}`}
                                                     startIcon={<DeleteOutlineSharpIcon/>}
                                                     onClick={() => setOpenedCancelReservationDialogIndex(index)}
                                                     style={{height: '100%'}}> CANCEL</Button>
-                                            <Button className={classes.rentButton} id="rent_bike_button"
+                                            <Button className={classes.rentButton} id={`rent_bike_button`}
                                                     startIcon={<DirectionsBikeIcon/>}
                                                     onClick={() => setOpenedRentBikeDialogIndex(index)}> RENT</Button>
                                             <Dialog open={isThisCancelReservationDialogOpened(index)}
@@ -118,7 +118,7 @@ const ReservedBikesListPage = () => {
                                                     <Button onClick={handleCloseCancelReservation} color="primary">
                                                         No
                                                     </Button>
-                                                    <Button onClick={handleCancelReservation} color="primary">
+                                                    <Button id={`cancel-reservation-confirm`} onClick={handleCancelReservation} color="primary">
                                                         Yes
                                                     </Button>
                                                 </DialogActions>

@@ -108,6 +108,7 @@ const BikeListPage = () => {
                         RENT
                       </Button>
                       <Button
+                        id={`bike-reserve-button-confirm-${index}`}
                         className={classes.reserveBikeButton}
                         startIcon={<HourglassEmptyIcon />}
                         onClick={() => setOpenedReserveBikeDialogIndex(index)}
@@ -150,7 +151,7 @@ const BikeListPage = () => {
                           >
                             No
                           </Button>
-                          <Button onClick={handleReserveBike} color="primary">
+                          <Button id="bike-reserve-button-confirm" onClick={handleReserveBike} color="primary">
                             Yes
                           </Button>
                         </DialogActions>
